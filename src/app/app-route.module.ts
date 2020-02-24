@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 const route: Routes = [
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  // { path: '',   redirectTo: 'home', pathMatch: 'full' },
+
+
 
 ];
 
 @NgModule({
   declarations: [],
   imports: [
-    route,
+    RouterModule.forRoot(route, { enableTracing: true }),
+
     CommonModule
   ],
   exports: [

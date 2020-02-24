@@ -1,10 +1,11 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
 import { AppRouteModule } from './app-route.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 
@@ -16,7 +17,7 @@ import { HomeModule } from './home/home.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatSliderModule,
+    SharedModule,
     AuthModule,
     HomeModule,
     AppRouteModule
