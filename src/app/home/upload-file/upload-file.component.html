@@ -1,0 +1,52 @@
+
+<div class="uk-section-default">
+  <div class="uk-container uk-padding">
+    <div uk-grid>
+      <div  class="uk-width-1-3@m" >  <div id="upload" class=""></div>
+
+
+    </div>
+
+      <div class="" *ngIf ="uploadedImage.length>0"  >
+        <form #myform="ngForm" (ngSubmit)="submitForm(myform)" >
+        <div *ngFor='let i of uploadedImage' class="uk-clearfix uk-card uk-card-body uk-card-default" >
+         <img width="200" src="{{i.image}}"  class="uk-float-left uk-border-rounded">
+         <div class="uk-float-right uk-inline uk-margin-small-left">
+           <mat-form-field   class="uk-width-expand">
+             <mat-label  >Title</mat-label>
+             <input type="text" name='title_{{i.id}}' [(ngModel)]="i.title" (ngModelChange)="inputChange($event)"  id="title_{{i.id}}"  matInput placeholder="Title" required>
+           </mat-form-field>
+           <mat-form-field class="uk-width-expand">
+             <mat-label>Select category</mat-label>
+             <mat-select name="category_{{i.id}}" required [(ngModel)]="i.categoryId">
+               <mat-option *ngFor="let category of categories" [value]="category.id">
+                 {{ category.name }}
+               </mat-option>
+             </mat-select>
+           </mat-form-field>
+           <ejs-multiselect [(ngModel)]="i.tags" name="tags_{{i.id}}" (ngModelChange)="inputChange($event)" id='multiselectelement' [allowCustomValue]='true' [allowFiltering]='true' [maximumSelectionLength]='5' [dataSource]='tags' placeholder="Tags"></ejs-multiselect>
+
+           <mat-form-field class="uk-width-expand">
+             <mat-label  >Where is this photo taken</mat-label>
+             <input type="text" name="search_{{i.id}}"
+                     #search
+                    placeholder="search for place"
+                    aria-label="search place"
+                    matInput
+                     className="search"
+                     id='search_{{i.id}}'
+                    >
+           </mat-form-field>
+
+         </div>
+        </div>
+        <button mat-raised-button class="uk-width-expand" [disabled]="!myform.form.valid" type="submit" color="primary">Publish</button>
+      </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+

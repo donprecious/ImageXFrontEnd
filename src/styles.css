@@ -1,4 +1,123 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Comfortaa|Ubuntu+Condensed&display=swap');
+/* @import '@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+html, body { height: 100%;
+  font-family: 'Comfortaa' , 'Ubuntu Condensed';
+}
+body { margin: 0; font-family: 'Comfortaa', Roboto, "Helvetica Neue", sans-serif; }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*
+ font-family: 'Comfortaa', ;
+font-family: 'Ubuntu Condensed', ;
+ */
+
+/* material component  */
+.mat-typography, .mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab
+.mat-form-field {
+  font-family: 'Comfortaa' , 'Ubuntu Condensed';
+}
+
+
+.bg-purple{
+   background-color: #320F66 ;
+   background: linear-gradient(45deg, #9e0303, #091a77);
+   color: white;
+}
+.uk-navbar-nav>li>a {
+  color: #efecec;
+}
+.uk-navbar-nav>li.uk-active>a {
+  color: #CC5333;
+}
+.uk-navbar-toggle {
+  color: #fcfcfc;
+}
+/* Text */
+.logo-text{
+  color: #fcfcfc;
+  font-family: 'Comfortaa';
+font-style : normal;
+font-weight: bold;
+font-size: 1rem;
+line-height: 10%;
+letter-spacing : 0.4em;
+}
+.logo-text:hover, .logo-text:focus, .logo-text:active {
+  color: #fcfcfc;
+  opacity: 0.7;
+}
+
+h1.hero-text, h2.hero-text,h3.hero-text,h4.hero-text,h5.hero-text{
+  font-family: Comfortaa;
+  font-style: normal;
+  font-weight: bold;
+  /* font-size: 2rem; */
+  line-height: 27px;
+  /* identical to box height */
+  color: #FFFFFF;
+  }
+
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
+  font-family: 'Comfortaa';
+  letter-spacing : 0.2em;
+}
+.uk-navbar-nav>li:hover>a, .uk-navbar-nav>li>a.uk-open, .uk-navbar-nav>li>a:focus{
+  color:  #CC5333;
+  opacity: 0.8;
+
+}
+.link-header{
+  font-family: Ubuntu Condensed;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 0.3em;
+}
+.backgound-gradient{
+  background: rgba(209, 62, 87, 0.7);
+  /* background: linear-gradient(139deg, rgba(156, 10, 35, 0.24) 8%, rgba(154, 10, 37, 0.69) 17%, rgba(133, 28, 61, 0.55) 32%, rgba(127, 33, 68, 0.72) 46%, rgba(117, 42, 80, 0.14) 50%, rgba(103, 54, 96, 0.65) 66%, rgba(90, 10, 140, 0.59) 92%); */
+  background: linear-gradient(181.32deg, rgba(35, 7, 77, 0.73) 16.09%, rgba(204, 83, 51, 0) 79.71%), linear-gradient(0deg, rgba(1, 1, 1, 0.35), rgba(1, 1, 1, 0.35));
+/* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#9c0a23",endColorstr="#5a0a8c",GradientType=1); */
+}
+.backgound-gradient-red-blue{
+  background-color: #320F66 ;
+  background: linear-gradient(45deg, #9e0303, #091a77);
+}
+.backgound-dark-transparent {
+  background: rgba(0, 0, 0, 0.664);
+  color: white;
+}
+
+.backgound-light-transparent {
+  background: rgba(255, 255, 255, 0.815);
+  color: rgb(22, 22, 22);
+}
+
+.hero-input{
+  border-radius: 20px;
+  box-shadow: 0px 14px 18px 2px #060606;
+}
+
+.text-white{
+  color: white;
+}
+.text-dark{
+  color: rgb(22, 22, 22);
+}
+.text-style-1{
+  font-family: Comfortaa;
+  font-style: normal;
+  font-weight: bold;
+  /* font-size: 2rem; */
+  line-height: 27px;
+  /* identical to box height */
+
+  }
+  .text-style-2{
+    font-family: 'Ubuntu Condensed' ;
+    font-style: normal;
+    font-weight: bold;
+    /* font-size: 2rem; */
+    line-height: 27px;
+    /* identical to box height */
+
+    }

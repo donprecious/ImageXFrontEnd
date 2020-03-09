@@ -1,0 +1,67 @@
+<div class="uk-text-center">
+  <h2 class="text-style-1"> Sign Up</h2>
+  <button href="" class="uk-icon-button uk-margin-small-right" uk-icon="twitter"></button>
+  <button href="" class="uk-icon-button  uk-margin-small-right" uk-icon="facebook"></button>
+</div>
+<div class="uk-padding-large uk-padding-remove-top">
+ <form [formGroup]='registerForm' (ngSubmit)='submit()'>
+   <div class="uk-text-center uk-padding-small">
+    <span class="uk-text-warning" *ngIf="errorMessage != ''">{{errorMessage}}</span> <br>
+    <span class="uk-text-error" *ngFor="let i of errors"> {{i}} <br> </span>
+   </div>
+
+ <div class="uk-alert uk-alert-danger" *ngIf="hasError">
+
+ </div>
+  <span *ngIf="f.fullname.invalid && (f.fullname.dirty || f.fullname.touched)">
+    <span class="uk-text-warning" *ngIf="f.fullname.errors.required" > name required </span>
+
+  </span>
+  <mat-form-field   class="uk-width-expand">
+    <mat-label  >Your Name</mat-label>
+    <input type="text" formControlName='fullname'   matInput placeholder="Your name" required>
+  </mat-form-field>
+
+    <span *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+      <span class="uk-text-warning" *ngIf="f.email.errors.required" > Email required <br></span>
+      <span class="uk-text-warning" *ngIf="f.email.errors.email" > Valid email required </span>
+    </span>
+
+  <mat-form-field   class="uk-width-expand">
+    <mat-label  >Email</mat-label>
+    <input type="email" formControlName='email'  matInput placeholder="Email Address">
+  </mat-form-field>
+
+
+  <span *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+    <span class="uk-text-warning" *ngIf="f.password.errors.required" > Password required <br></span>
+    <span class="uk-text-warning" *ngIf="f.password.errors.minLength" > Password should be at least 6 charaters <br></span>
+  </span>
+
+<mat-form-field   class="uk-width-expand">
+  <mat-label  >Password</mat-label>
+  <input type="password" formControlName="password"  matInput placeholder="Password" required>
+</mat-form-field>
+
+<span *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+  <span class="uk-text-warning" *ngIf="f.confirmPassword.errors.required" > Confirm Password required <br></span>
+  <span class="uk-text-warning" *ngIf="f.confirmPassword.errors.mustMatch" > Confirm Password must match <br></span>
+
+</span>
+
+<mat-form-field   class="uk-width-expand">
+  <mat-label   >Confirm Password</mat-label>
+  <input type="password" formControlName="confirmPassword"  matInput placeholder="Email Address" required>
+</mat-form-field>
+<div class="uk-text-center">
+  <button mat-raised-button color="primary" type="submit" >Register</button>
+
+  <br>
+  <br>
+  <br>
+    <a class="text-style-1" uk-switcher-item="0"> I already have an account</a>
+</div>
+</form>
+
+</div>
+

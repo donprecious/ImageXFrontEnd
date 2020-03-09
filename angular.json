@@ -27,13 +27,28 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/uikit/dist/css/uikit.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/uppy/dist/uppy.css",
+              "node_modules/@syncfusion/ej2-base/styles/material.css",
+              "node_modules/@syncfusion/ej2-buttons/styles/material.css",
+              "node_modules/@syncfusion/ej2-dropdowns/styles/material.css",
+              "node_modules/@syncfusion/ej2-inputs/styles/material.css",
+              "node_modules/@syncfusion/ej2-popups/styles/material.css",
+              "node_modules/@syncfusion/ej2-lists/styles/material.css",
+              "node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css",
+              "node_modules/toastr/build/toastr.min.css",
+
+
               "src/styles.css"
 
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/uikit/dist/js/uikit.min.js",
-              "node_modules/uikit/dist/js/uikit-icons.min.js"
+              "node_modules/uikit/dist/js/uikit-icons.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.js",
+              "node_modules/uppy/dist/uppy.min.js",
+              "node_modules/toastr/build/toastr.min.js"
 
             ]
           },

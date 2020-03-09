@@ -21,10 +21,18 @@
     "@angular/platform-browser": "~9.0.2",
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
+    "@fortawesome/fontawesome-free": "^5.12.1",
+    "@syncfusion/ej2-angular-dropdowns": "^17.4.51",
+    "filepond-plugin-file-validate-size": "^2.2.0",
+    "filepond-plugin-file-validate-type": "^1.2.4",
+    "filepond-plugin-image-validate-size": "^1.2.3",
     "jquery": "^3.4.1",
     "rxjs": "~6.5.4",
+    "toastr": "^2.1.4",
     "tslib": "^1.10.0",
     "uikit": "^3.3.2",
+    "uppy": "^1.9.3",
+    "uppy-angular": "0.0.9",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

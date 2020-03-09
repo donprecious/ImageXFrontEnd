@@ -1,0 +1,42 @@
+<div class="uk-text-center">
+  <h2 class="text-style-1"> Sign in</h2>
+  <button href="" class="uk-icon-button uk-margin-small-right" uk-icon="twitter"></button>
+  <button href="" class="uk-icon-button  uk-margin-small-right" uk-icon="facebook"></button>
+</div>
+<div class="uk-padding-large uk-padding-remove-top">
+  <form [formGroup]= 'loginForm' (ngSubmit)="login()">
+    <div class="uk-text-center uk-padding-small">
+      <span class="uk-text-warning" *ngIf="errorMessage != ''">{{errorMessage}}</span> <br>
+      <span class="uk-text-error" *ngFor="let i of errors"> {{i}} <br> </span>
+     </div>
+     <span *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+      <span class="uk-text-warning" *ngIf="f.email.errors.required" > Email required <br></span>
+      <span class="uk-text-warning" *ngIf="f.email.errors.email" > Valid email required </span>
+    </span>
+      <mat-form-field   class="uk-width-expand">
+        <mat-label  >Email</mat-label>
+
+        <input type="email"  formControlName="email"  matInput placeholder="Email Address">
+      </mat-form-field>
+      <span *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+        <span class="uk-text-warning" *ngIf="f.password.errors.required" > Password required <br></span>
+        <span class="uk-text-warning" *ngIf="f.password.errors.minLength" > Password should be at least 6 charaters <br></span>
+      </span>
+    <mat-form-field   class="uk-width-expand">
+      <mat-label  >Password</mat-label>
+      <input type="password"  formControlName="password" matInput placeholder="Enter Password">
+    </mat-form-field>
+
+
+    <div class="uk-text-center">
+
+    <button mat-raised-button type="submit" color="primary">Sign in</button>
+      <br>
+      <br>
+      <br>
+        <a class="text-style-1"> Forget Password</a> | <a class="text-style-1"  >Sign up</a>
+    </div>
+  </form>
+
+</div>
+

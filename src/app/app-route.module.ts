@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 const route: Routes = [
-  // { path: '',   redirectTo: 'home', pathMatch: 'full' },
+  { path: '',   redirectTo: 'home', pathMatch: 'full' },
 
 
 
