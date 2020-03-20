@@ -1,3 +1,12 @@
-<p>
-  myUploads works!
-</p>
+
+<div class='uk-section'>
+  <div class="uk-container uk-container-large">
+    <h2 class="text-style-1 uk-text-center">My Uploads</h2>
+    <div class="uk-child-width-1-3@s uk-child-width-1-4@m" uk-grid="masonry: true">
+      <app-users-image-card [displayType] ='displayType'   *ngFor="let i of images" [image]="i" ></app-users-image-card>
+    </div>
+  </div>
+
+</div>
+
+

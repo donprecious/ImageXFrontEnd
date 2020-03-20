@@ -7,7 +7,7 @@
   <form [formGroup]= 'loginForm' (ngSubmit)="login()">
     <div class="uk-text-center uk-padding-small">
       <span class="uk-text-warning" *ngIf="errorMessage != ''">{{errorMessage}}</span> <br>
-      <span class="uk-text-error" *ngFor="let i of errors"> {{i}} <br> </span>
+      <span class="uk-text-warning uk-text" *ngFor="let i of errors"> {{i}} <br> </span>
      </div>
      <span *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
       <span class="uk-text-warning" *ngIf="f.email.errors.required" > Email required <br></span>

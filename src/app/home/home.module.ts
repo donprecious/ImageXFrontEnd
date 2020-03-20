@@ -14,6 +14,11 @@ import { ImageGridComponent } from '../image-grid/image-grid.component';
 import { ImageListComponent } from './image/image-list/image-list.component';
 import { ImageCardComponent } from './image/image-card/image-card.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
+import { AfricaMapComponent } from './africa-map/africa-map.component';
+import { WorldMapComponent } from './world-map/world-map.component';
+import { ViewImageComponent } from './image/view-image/view-image.component';
+import { MyCollectionComponent } from './image/my-collection/my-collection.component';
+import { UsersImageCardComponent } from './image/users-image-card/users-image-card.component';
 
 
 @NgModule({
@@ -28,7 +33,12 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
        ImageCardComponent,
        ImageComponent,
        UploadFileComponent,
-       MyUploadsComponent
+       MyUploadsComponent,
+       AfricaMapComponent,
+       WorldMapComponent,
+       ViewImageComponent,
+       MyCollectionComponent,
+       UsersImageCardComponent
       ],
   imports: [
     CommonModule,

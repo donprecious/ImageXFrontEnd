@@ -3,7 +3,8 @@ import { SignInModel, SiginResponseModel } from './../auth/signin-model';
 import { ApiAppUrlService } from './api-app-url.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { IUser } from '../models/IUserModel';
 
 export interface IAuth {
   isLoggedId: boolean;
@@ -18,6 +19,7 @@ export interface IAuth {
 })
 export class AuthService {
 
+  public isLogin:  BehaviorSubject<boolean> = new  BehaviorSubject<boolean>(false);
   constructor(private api: ApiAppUrlService, private http: HttpClient) {
    }
 
@@ -27,6 +29,10 @@ export class AuthService {
 
    public register(registerModel: RegisterModel): Observable<RegisterResponseModel> {
      return this.http.post<RegisterResponseModel>(this.api.baseApiUrl + 'Auth/Register', registerModel );
+   }
+
+   public getCurrentUser() : Observable<IUser> {
+     return this.http.get<IUser>(this.api.baseApiUrl + 'Auth/GetCurrentUser');
    }
 
 

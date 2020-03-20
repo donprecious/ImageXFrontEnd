@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'image-africa';
+
+  constructor(private auth: AuthService) {
+
+  }
+
+  ngOnInit(): void {
+
+     const token = localStorage.getItem('token');
+     if (token) {
+      this.auth.isLogin.next(true);
+    }
+  }
 }
+

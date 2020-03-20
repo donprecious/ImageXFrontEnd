@@ -3,22 +3,21 @@ import { IImageModel } from './../../../models/IImageModels';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  // tslint:disable-next-line: component-selector
-  selector: 'app-myUploads',
-  templateUrl: './myUploads.component.html',
-  styleUrls: ['./myUploads.component.css']
+  selector: 'app-my-collection',
+  templateUrl: './my-collection.component.html',
+  styleUrls: ['./my-collection.component.css']
 })
-
-export class MyUploadsComponent implements OnInit {
+export class MyCollectionComponent implements OnInit {
 
   constructor(private imageService: ImageService) { }
   images: IImageModel[];
-  displayType = 'myupload';
-
+  displayType = 'mycollection';
   ngOnInit() {
-    this.imageService.getMyUploads().subscribe(a=> {
+    this.imageService.getCollection().subscribe(a=> {
       this.images = a;
     });
   }
+
+
 
 }

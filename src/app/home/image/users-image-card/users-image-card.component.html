@@ -1,5 +1,6 @@
 <div class="uk-inline uk-transition-toggle" tabindex="0">
-  <a [routerLink]="['/view', image.id]"><img data-src="{{image.imageUrl}}" width=""  class="uk-border-rounded" height="" alt="" uk-img></a>
+  <a [routerLink]="['/view', image.id]">
+    <img data-src="{{image.imageUrl}}" uk-height-medium  width=""  class="uk-border-rounded" alt="" uk-img></a>
 
   <div class="uk-overlay uk-overlay-primary   uk-position-bottom uk-transition-fade" style="padding:15px">
     <div class="uk-clearfix">
@@ -8,7 +9,6 @@
         <img src="{{profileUrl}}"  width="40" class="uk-border-circle" ></a>
           <div uk-drop="pos: top-center">
               <div class="uk-card uk-card-body uk-card-default uk-padding-small">
-
                  <div class="uk-clearfix">
                   <img src="{{profileUrl}}"  class="uk-float-left" width="40">
                   <span class="uk-float-right text-style-1" > {{image.user.firstName == null? 'anonymous': image.user.firstName}} {{image.user.lastName}}
@@ -16,7 +16,6 @@
                     <span style="font-size: 0.8rem;"> <i class="fa fa-eye" ></i> views   {{contributorViews}}</span> <br>
                     <span style="font-size: 0.8rem;"> <i class="fa fa-network-wired" ></i> fellowers 10.5k</span> <br>
                   </span>
-
                 </div>
 
                 <button mat-raised-button color="primary" class="uk-margin"> Follow</button>
@@ -41,9 +40,6 @@
                    <div class="uk-clearfix">
                      <div id="map_{{image.id}}" class='map' style="height: 400px;"></div>
                   </div>
-
-
-
                 </div>
             </div>
          <!-- end-->
@@ -51,10 +47,10 @@
 
       </div>
       <div class="uk-float-right">
-
-        <a #addElement (click)='addCollection(addElement, image.id)' title='add to collection' class="uk-margin-medium-right"><i class=" fa fa-plus"></i> </a>
-        <a #likeElement (click)='addLike(likeElement, image.id)' title='like photo {{image.name}}' class="uk-margin-medium-right"> <i class="fa fa-heart"></i> </a>
-
+        <a #deleteCollElement (click)='deleteFromCollection(image.id)' title='like photo {{image.name}}' *ngIf='displayType === "mycollection"' class="uk-margin-medium-right"> <i class="fa fa-trash"></i> </a>
+        <a #likeElement (click)='addLike(likeElement, image.id)' title='like photo {{image.name}}' *ngIf='displayType === "mycollection"' class="uk-margin-medium-right"> <i class="fa fa-heart"></i> </a>
+        <a #deleteElement  (click)='delete(image.id)' title='add to collection' *ngIf='displayType === "myupload"' class="uk-margin-medium-right"><i class=" fa fa-trash"></i> </a>
+        <a #editElement (click)='edit(image.id)' title='like photo {{image.name}}' *ngIf="displayType === 'myupload'" class="uk-margin-medium-right"> <i class="fa fa-edit"></i> </a>
         <a href="{{image.imageUrl}}" download title='download photo {{image.name}}'  class="fa fa-download"></a>
 
       </div>

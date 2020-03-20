@@ -1,3 +1,4 @@
+import { StoreModule } from '@ngrx/store';
 
 import { MatSliderModule } from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
@@ -14,12 +15,14 @@ import { UppyAngularModule } from 'uppy-angular';
 import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HttpClientJsonpModule } from '@angular/common/http';
+import * as appStore from '../redux/store';
+
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-
+    StoreModule.forFeature('root', appStore.approotReducer ),
   ],
   exports : [
     HttpClientJsonpModule,
@@ -34,6 +37,7 @@ import { HttpClientJsonpModule } from '@angular/common/http';
     MultiSelectModule,
     MatAutocompleteModule
     // MaterialComponentModuleModule
+
   ]
 })
 export class SharedModule { }

@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { StoreModule } from '@ngrx/store';
 const route: Routes = [
   { path: '',   redirectTo: 'home', pathMatch: 'full' },
 

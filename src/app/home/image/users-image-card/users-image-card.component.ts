@@ -1,23 +1,26 @@
-import { ToastrService } from './../../../services/toastr.service';
-import { ImageService } from './../../../services/image.service';
-import { IImageModel, IContentCollection, ILike } from './../../../models/IImageModels';
 import { Component, OnInit, Input } from '@angular/core';
+import { IImageModel, IContentCollection, ILike } from 'src/app/models/IImageModels';
+import { ImageService } from 'src/app/services/image.service';
+import { ToastrService } from 'src/app/services/toastr.service';
 declare var google: any;
 declare var $: any;
 declare var helpers: any;
-
 @Component({
-  selector: 'app-image-card',
-  templateUrl: './image-card.component.html',
-  styleUrls: ['./image-card.component.css']
+  selector: 'app-users-image-card',
+  templateUrl: './users-image-card.component.html',
+  styleUrls: ['./users-image-card.component.css']
 })
-export class ImageCardComponent implements OnInit {
+export class UsersImageCardComponent implements OnInit {
 
   @Input() image: IImageModel;
+  @Input() displayType;
   profileUrl: string;
   viewsfig: any;
   contributorViews: any;
+
   constructor(private imageService: ImageService, private toast: ToastrService) { }
+
+
 
   ngOnInit(): void {
     if ( this.image.user.profileImageUrl !== null) {
@@ -39,20 +42,19 @@ export class ImageCardComponent implements OnInit {
     });
     const marker = new google.maps.Marker({position, map});
   }
-  addCollection(html: any, id) {
-        const userId = localStorage.getItem('userId');
-        const obj = {
-          imageId: id,
-          userId
-       } as IContentCollection;
-        this.imageService.createCollection(obj).subscribe(a => {
-          console.log(a);
-          this.toast.success('Added to collection');
-          console.log(html);
-          $(html).css('color', '#9e0303');
-       }, err => {
-         console.log(err);
-       });
+  edit(id) {
+
+  }
+
+ delete(id) {
+
+  }
+
+  getViews(id) {
+    this.imageService.countViews(id).subscribe( a => {
+      this.viewsfig =   helpers.convertNumsToShortWords(a);
+    });
+
   }
   addLike(html: any, id) {
     const userId = localStorage.getItem('userId');
@@ -71,16 +73,33 @@ export class ImageCardComponent implements OnInit {
 
   }
 
-  getViews(id) {
-    this.imageService.countViews(id).subscribe( a => {
-      this.viewsfig =   helpers.convertNumsToShortWords(a);
+  deleteFromCollection(id){
 
-    });
   }
-  getContribitorsViews(id) {
-    this.imageService.countContributorViews(id).subscribe( a=> {
-      this.contributorViews =   helpers.convertNumsToShortWords(a);
 
-    });
+  getContribitorsViews(id) {
+    this.imageService.countContributorViews(id).subscribe( a => {
+       this.contributorViews =   helpers.convertNumsToShortWords(a);
+     }
+    );
  }
+
+ addCollection(html: any, id) {
+  const userId = localStorage.getItem('userId');
+  const obj = {
+    imageId: id,
+    userId
+ } as IContentCollection;
+  this.imageService.createCollection(obj).subscribe(a => {
+    console.log(a);
+    this.toast.success('Added to collection');
+    console.log(html);
+    $(html).css('color', '#9e0303');
+ }, err => {
+   console.log(err);
+ });
+}
+
+
+
 }
