@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   hasError = false;
   errors : any[];
+
   errorMessage : string;
   constructor(private authService: AuthService, private fb: FormBuilder) {
 
@@ -59,12 +60,26 @@ export class RegisterComponent implements OnInit {
       }, err => {
 
         console.log('error', err);
-        if (err.Errors != null || err.Errors != undefined){
-          if (err.error.error.validationErrors !== null) {
-           for (const i of  err.Errors) {
-            this.errors.push(i.ErrorMessage);
-           }
-          }
+        if (err.error != null || err.error != undefined) {
+            // tslint:disable-next-line: forin
+            if (typeof err.error !== 'string') {
+              for (let ikey in err.error) {
+                if (err.error.hasOwnProperty(ikey)) {
+                  for (const i of err.error[ikey]) {
+                    this.errors.push(i);
+                    // console.log('key loop property", ...err.error[ikey] );
+                  }
+
+                }
+
+              }
+            }
+
+          // if (err.error.error.validationErrors !== null) {
+          //  for (const i of  err.Errors) {
+          //   this.errors.push(i.ErrorMessage);
+          //  }
+          // }
         }
 
       });

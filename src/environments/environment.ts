@@ -6,7 +6,9 @@ export const environment = {
   production: false,
 
   baseApiUrl: 'https://imagexafrica.azurewebsites.net/api/'
+  // baseApiUrl: `https://localhost:44304/api/`
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
