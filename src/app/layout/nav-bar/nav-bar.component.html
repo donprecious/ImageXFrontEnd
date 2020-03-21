@@ -64,34 +64,35 @@
         </div>
 
         <div id="offcanvas-nav" uk-offcanvas="overlay: true">
-          <div class="uk-offcanvas-bar bg-white">
+          <div class="uk-offcanvas-bar text-dark bg-white">
 
-              <ul class="uk-nav">
-                <li>
-                  <a href="#">Categories</a>
-                  <div class="uk-navbar-dropdown">
-                      <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li class="uk-active"><a href="#">Children</a></li>
+              <ul class="uk-nav uk-nav-parent-icon" uk-nav>
+                <li class="uk-parent">
+                  <a href="#" >Categories</a>
+
+                      <ul class="uk-nav-sub">
+
                           <li><a href="#">Festivals</a></li>
                           <li><a href="#">Love</a></li>
                           <li><a href="#">People</a></li>
                           <li><a href="#">More</a></li>
                       </ul>
-                  </div>
+
               </li>
-                  <li >
+                  <li class="uk-parent" >
                     <a href="#">Explore</a>
-                    <div class="uk-navbar-dropdown">
-                      <ul class="uk-nav uk-navbar-dropdown-nav">
-                          <li class="uk-active"><a routerLink="africa-map">Africa Map</a></li>
-                          <li>   <a href="#">Loved by many</a></li>
-                          <li>  <a href="#">Photos by colors</a></li>
-                          <li>   <a href="#">By Region</a></li>
+
+                      <ul lass="uk-nav-sub">
+                        <li class="uk-active"><a routerLink="africa-map">Africa Map</a></li>
+                        <li ><a routerLink="world-map">World Map</a></li>
+                        <li>   <a href="#">Loved by many</a></li>
+                        <li>  <a href="#">Photos by colors</a></li>
+                        <li>   <a href="#">By Region</a></li>
                       </ul>
-                  </div>
+
                   </li>
-                    <li *ngIf='!(isSignedIn$ | async)' > <a href="#modal-auth" uk-toggle>Signin</a> </li>
-                    <!-- <li *ngIf='!(isSignedIn | async)' > <a href="#">Sign up</a> </li> -->
+                  <li>  <a routerLink='/upload' class="uk-button uk-button-primary uk-button-small" >upload</a></li>
+                    <li *ngIf='(isSignedIn$ | async) == false' > <a href="#modal-auth" uk-toggle>Signin</a> </li>
 
               </ul>
 

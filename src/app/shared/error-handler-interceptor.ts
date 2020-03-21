@@ -28,7 +28,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
               console.log(`error status : ${error.status} ${error.statusText}`);
               switch (error.status) {
                   case 401:
-
                       // this.router.navigateByUrl("/login");
                        this.toast.info('please login to continue');
                        UIkit.modal('#modal-auth').show();

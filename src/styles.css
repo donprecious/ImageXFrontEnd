@@ -157,3 +157,7 @@ h1.hero-text, h2.hero-text,h3.hero-text,h4.hero-text,h5.hero-text{
   border-radius: 10px;
   border: 1px solid #091a77;
 }
+.uk-offcanvas-bar a{
+  color: rgb(22, 22, 22);
+  margin: 5px;
+}
