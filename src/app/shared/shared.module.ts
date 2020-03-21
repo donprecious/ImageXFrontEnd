@@ -15,14 +15,14 @@ import { UppyAngularModule } from 'uppy-angular';
 import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HttpClientJsonpModule } from '@angular/common/http';
-import * as appStore from '../redux/store';
+import { approotReducer } from '../redux/store';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('root', appStore.approotReducer ),
+    StoreModule.forFeature('root', approotReducer ),
   ],
   exports : [
     HttpClientJsonpModule,

@@ -1,3 +1,4 @@
+import { ErrorHandlerInterceptor } from './shared/error-handler-interceptor';
 
 import { AuthInterceptor } from './shared/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +37,10 @@ import { environment } from '../environments/environment';
     }),
     SharedModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
