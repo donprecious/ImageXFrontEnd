@@ -35,6 +35,10 @@ export class AuthService {
      return this.http.get<IUser>(this.api.baseApiUrl + 'Auth/GetCurrentUser');
    }
 
+   public GoogleSignIn(token): Observable<SiginResponseModel> {
+     return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/GoogleAuth', { 'idToken': token});
+   }
+
 
 
 }
