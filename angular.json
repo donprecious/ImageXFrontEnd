@@ -36,10 +36,7 @@
               "node_modules/@syncfusion/ej2-lists/styles/material.css",
               "node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css",
               "node_modules/toastr/build/toastr.min.css",
-<<<<<<< HEAD
-=======
               "node_modules/pace-js/themes/blue/pace-theme-flash.css",
->>>>>>> 5a4a759008f5fbd54facaafe557154eba807349e
               "src/styles.css"
             ],
             "scripts": [
