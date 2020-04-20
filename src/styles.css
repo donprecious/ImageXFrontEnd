@@ -112,7 +112,10 @@ h1.hero-text, h2.hero-text,h3.hero-text,h4.hero-text,h5.hero-text{
   background: rgba(255, 255, 255, 0.815);
   color: rgb(22, 22, 22);
 }
-
+.backgound-primary{
+  background: #8dc3f8;
+  color: rgba(0, 0, 0, 0.664);;
+}
 .hero-input{
   border-radius: 20px;
   box-shadow: 0px 14px 18px 2px #060606;
@@ -123,6 +126,12 @@ h1.hero-text, h2.hero-text,h3.hero-text,h4.hero-text,h5.hero-text{
 }
 .text-dark{
   color: rgb(22, 22, 22);
+}
+.text-gray{
+  color: rgb(85, 84, 84);
+}
+.text-primary{
+  color: #238cf5;
 }
 .text-style-1{
   font-family: Comfortaa;

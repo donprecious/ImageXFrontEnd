@@ -36,6 +36,10 @@
               "node_modules/@syncfusion/ej2-lists/styles/material.css",
               "node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css",
               "node_modules/toastr/build/toastr.min.css",
+<<<<<<< HEAD
+=======
+              "node_modules/pace-js/themes/blue/pace-theme-flash.css",
+>>>>>>> 5a4a759008f5fbd54facaafe557154eba807349e
               "src/styles.css"
             ],
             "scripts": [
@@ -46,8 +50,8 @@
               "node_modules/uppy/dist/uppy.min.js",
               "node_modules/toastr/build/toastr.min.js",
               "node_modules/@google/markerclustererplus/dist/markerclustererplus.min.js",
-              "src/assets/helpers/helper.js"
-            ]
+              "src/assets/helpers/helper.js",
+              "node_modules/pace-js/pace.min.js"            ]
           },
           "configurations": {
             "production": {

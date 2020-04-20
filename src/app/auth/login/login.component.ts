@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 declare var UIkit: any;
+declare var gapi: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,14 +19,25 @@ export class LoginComponent implements OnInit {
   errors: any[];
   errorMessage: string;
   loginForm: FormGroup;
+  googleAuth: any;
   constructor(private authService: AuthService, private fb: FormBuilder,
               private toast: ToastrService, private store: Store<IAppState>
-    ) { }
+    ) {
+
+
+
+    }
 
 
   get f() {return this.loginForm.controls; }
 
   ngOnInit(): void {
+    if( typeof gapi == 'undefined') {
+      location.reload();
+    }else{
+      this.loadgoogleLogin();
+    }
+
     this.hasError = false;
     this.errors = [] ;
     this.errorMessage = '';
@@ -38,13 +50,62 @@ export class LoginComponent implements OnInit {
   });
   }
 
-  login(): void {
-      const data: SignInModel = {
-          email: this.loginForm.get('email').value,
-          password: this.loginForm.get('password').value
-       }as SignInModel;
+      login(): void {
+          const data: SignInModel = {
+              email: this.loginForm.get('email').value,
+              password: this.loginForm.get('password').value
+          }as SignInModel;
 
-      this.authService.signIn(data).subscribe(a => {
+          this.authService.signIn(data).subscribe(a => {
+            console.log(a);
+            localStorage.setItem('token', a.auth_token);
+            localStorage.setItem('userId', a.id);
+            this.toast.success('login successful', 'notification');
+              // do other login stuff
+            const currentUrl = location.href;
+            UIkit.modal('#modal-auth').hide();
+            // close the modal
+            //
+
+          //  this.store.dispatch(SIGNEDIN());
+            this.authService.isLogin.next(true);
+            console.log('Is login observable', this.authService.isLogin);
+            console.log(a);
+
+          },
+            err => {
+            console.log('error', err);
+            this.errors = [];
+            if (err.error.login_failure != null || err.error.login_failure !== undefined) {
+            for (const i of  err.error.login_failure ) {
+              this.errors.push(i);
+            }
+          }
+          });
+
+      }
+
+  loadgoogleLogin() {
+    gapi.load('auth2', () => {
+      /* Ready. Make a call to gapi.auth2.init or some other API */
+      this.googleAuth = gapi.auth2.init({
+        client_id: '473446857855-9fmn8dnefe3b9mvm046sdq35echrss1l.apps.googleusercontent.com'
+      });
+
+    });
+  }
+
+  signInWithGoogle() {
+     this.googleAuth.signIn({
+      scope: 'profile email',
+      prompt: 'select_account'
+    }).then((a) => {
+      console.log(a);
+      const currentUser = this.googleAuth.currentUser.get();
+      const auth = currentUser.getAuthResponse();
+      console.log('current user' , currentUser);
+      const token = auth.id_token;
+      this.authService.GoogleSignIn(token).subscribe(a=> {
         console.log(a);
         localStorage.setItem('token', a.auth_token);
         localStorage.setItem('userId', a.id);
@@ -54,23 +115,11 @@ export class LoginComponent implements OnInit {
         UIkit.modal('#modal-auth').hide();
         // close the modal
         //
-
       //  this.store.dispatch(SIGNEDIN());
         this.authService.isLogin.next(true);
         console.log('Is login observable', this.authService.isLogin);
         console.log(a);
-
-       },
-        err => {
-        console.log('error', err);
-        this.errors = [];
-        if (err.error.login_failure != null || err.error.login_failure !== undefined) {
-         for (const i of  err.error.login_failure ) {
-          this.errors.push(i);
-         }
-      }
       });
-
+    });
   }
-
 }
