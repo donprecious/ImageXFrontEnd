@@ -1,3 +1,5 @@
+import { IResponseModel } from './../shared/models/IResponseModel';
+import { IForgetModel } from './../auth/auth-model';
 import { RegisterResponseModel, RegisterModel } from './../auth/register-model';
 import { SignInModel, SiginResponseModel } from './../auth/signin-model';
 import { ApiAppUrlService } from './api-app-url.service';
@@ -39,6 +41,16 @@ export class AuthService {
      return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/GoogleAuth', { 'idToken': token});
    }
 
+  public SendForgetPassword( forget: IForgetModel): Observable<IResponseModel> {
+    return this.http.post<IResponseModel>(this.api.baseApiUrl + 'Auth/ForgotPassword/forgot', forget);
+  }
+  public SendConfirmationEmail(email: string): Observable<IResponseModel> {
+    return this.http.get<IResponseModel>(this.api.baseApiUrl +"Auth/ResendConfirmationEmail/resend-confirmation?email="+ email);
+  }
+
+  public ConfirmEmail(email: string, token: string): Observable<IResponseModel>{
+    return this.http.get<IResponseModel>(this.api.baseApiUrl+`Auth/ConfirmEmail/confirm?userId=${email}&token=${token}`);
+  }
 
 
 }

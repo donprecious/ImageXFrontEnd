@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
               private fb: FormBuilder,
               private toast: ToastrService
      ) {
-      this.loadgoogleLogin();
+
  }
     registerForm: FormGroup;
 
@@ -32,7 +32,11 @@ export class RegisterComponent implements OnInit {
     this.hasError = false;
     this.errors = [] ;
     this.errorMessage = '';
-
+    if( typeof gapi == 'undefined') {
+      location.reload();
+    }else{
+      this.loadgoogleLogin();
+    }
     this.registerForm =  this.fb.group({
       fullname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],

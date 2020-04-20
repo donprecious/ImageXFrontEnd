@@ -8,10 +8,11 @@ import { LoginComponent } from './login/login.component';
 
 import { AuthComponent } from './auth/auth.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgetPasswordComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgetPasswordComponent, ConfirmEmailComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

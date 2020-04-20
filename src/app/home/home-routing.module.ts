@@ -20,6 +20,8 @@ const routes: Routes = [
     children: [
          {path: '', component: IndexComponent},
          {path: 'home', component: IndexComponent},
+         {path: 'home', component: IndexComponent},
+
          {path: 'index', component: IndexComponent},
          {path: 'view/:id', component: ViewImageComponent},
          {path: 'upload', component: UploadFileComponent, canActivate: [AuthGuard]},

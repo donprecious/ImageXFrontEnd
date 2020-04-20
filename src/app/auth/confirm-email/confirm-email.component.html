@@ -10,26 +10,22 @@
 <div class="uk-margin-left uk-margin-right">
   <div class="uk-text-center" [class]="{'uk-alert-success': success, 'uk-alert-error': success==false}" *ngIf="isSubmited"  uk-alert>
     <a class="uk-alert-close" uk-close></a>
-    <p>{{message}}</p>
+    <p></p>
  </div>
   <div class="uk-width-medium@s uk-border-rounded uk-card uk-margin-auto uk-width-1-2@m backgound-light-transparent" style="margin-top:20%;">
     <div class="uk-padding-small" >
 
-     <h2 class="uk-text-center">Forget password</h2>
      <div class="uk-text-center">
-       <form [formGroup]="formGroup" (ngSubmit)="sendEmail()">
-        <mat-form-field   class="uk-width-expand">
-          <mat-label  >Enter email to recover password</mat-label>
-          <input type="email" required formControlName='email'  matInput placeholder="Enter Email Address">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" >Send reset link</button>
-       </form>
+       <h1>Account Activation Required</h1>
+       <div class="text-primary uk-padding-small">
+        <p > Email Sent Please Check your inbox to activate Your Account -- message -- </p>
+       </div>
+
+       <a class="text-style-1"  > Resend email to <span class="uk-text-primary">iyeritufu@gmail.com</span></a>
        <br>
-
-
      </div>
 
-     <a class="text-style-1" [routerLink]="['/']" [queryParams]= "{showSigin:true}"> Back to Signin</a> |
+     <a class="text-style-1"> logout</a> |
      <a class="text-style-1 text-gray" routerLink="/"> Home</a>
   </div>
   </div>

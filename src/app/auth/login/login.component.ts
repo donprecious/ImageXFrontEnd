@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private fb: FormBuilder,
               private toast: ToastrService, private store: Store<IAppState>
     ) {
-  this.loadgoogleLogin();
+
+
 
     }
 
@@ -31,6 +32,11 @@ export class LoginComponent implements OnInit {
   get f() {return this.loginForm.controls; }
 
   ngOnInit(): void {
+    if( typeof gapi == 'undefined') {
+      location.reload();
+    }else{
+      this.loadgoogleLogin();
+    }
 
     this.hasError = false;
     this.errors = [] ;
