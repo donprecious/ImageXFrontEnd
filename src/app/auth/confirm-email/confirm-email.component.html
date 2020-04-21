@@ -8,23 +8,21 @@
 
 
 <div class="uk-margin-left uk-margin-right">
-  <div class="uk-text-center" [class]="{'uk-alert-success': success, 'uk-alert-error': success==false}" *ngIf="isSubmited"  uk-alert>
+  <div class="uk-text-center" [class]="{'uk-alert-success': success, 'uk-alert-danger': !success}" *ngIf="isSubmited"  uk-alert>
     <a class="uk-alert-close" uk-close></a>
-    <p></p>
+    <p>{{message}}</p>
  </div>
   <div class="uk-width-medium@s uk-border-rounded uk-card uk-margin-auto uk-width-1-2@m backgound-light-transparent" style="margin-top:20%;">
     <div class="uk-padding-small" >
 
      <div class="uk-text-center">
        <h1>Account Activation Required</h1>
-       <div class="text-primary uk-padding-small">
-        <p > Email Sent Please Check your inbox to activate Your Account -- message -- </p>
+       <div class="text-default uk-padding-small">
+        <p class="uk-text-medium"> {{message}}</p>
        </div>
-
-       <a class="text-style-1"  > Resend email to <span class="uk-text-primary">iyeritufu@gmail.com</span></a>
+       <a class="text-style-1" (click)="resendConfimation()"  > click here to resend email to <span class="uk-text-primary"> <em>{{userData.user.email}}</em></span></a>
        <br>
      </div>
-
      <a class="text-style-1"> logout</a> |
      <a class="text-style-1 text-gray" routerLink="/"> Home</a>
   </div>

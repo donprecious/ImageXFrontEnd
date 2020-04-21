@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ToastrService } from 'src/app/services/toastr.service';
 import { SignInModel } from './../signin-model';
 import { RegisterModel } from './../register-model';
@@ -22,7 +23,8 @@ export class RegisterComponent implements OnInit {
   errorMessage: string;
   constructor(private authService: AuthService,
               private fb: FormBuilder,
-              private toast: ToastrService
+              private toast: ToastrService,
+              private router: Router
      ) {
 
  }
@@ -69,33 +71,32 @@ export class RegisterComponent implements OnInit {
     this.authService.register(data).subscribe(d => {
         console.log(d);
         // login the user here
+        if(!d.data.canLogin){
+           // redirect user to confirm
+        }
         this.login({email: data.email, password: data.password }as SignInModel);
-
-
 
       }, err => {
 
         console.log('error', err);
-        if (err.error != null || err.error != undefined) {
-            // tslint:disable-next-line: forin
-            if (typeof err.error !== 'string') {
-              for (let ikey in err.error) {
-                if (err.error.hasOwnProperty(ikey)) {
-                  for (const i of err.error[ikey]) {
-                    this.errors.push(i);
-                    // console.log('key loop property", ...err.error[ikey] );
-                  }
+        this.hasError = true;
+        this.errors = err.error.message.split(',');
+        // if (err.error != null || err.error != undefined) {
+        //     // tslint:disable-next-line: forin
+        //     if (typeof err.error !== 'string') {
+        //       for (let ikey in err.error) {
+        //         if (err.error.hasOwnProperty(ikey)) {
+        //           for (const i of err.error[ikey]) {
+        //             this.errors.push(i);
+        //             // console.log('key loop property", ...err.error[ikey] );
+        //           }
 
-                }
+        //         }
 
-              }
-            }
-          // if (err.error.error.validationErrors !== null) {
-          //  for (const i of  err.Errors) {
-          //   this.errors.push(i.ErrorMessage);
-          //  }
-          // }
-        }
+        //       }
+        //     }
+
+        // }
 
       });
   }
@@ -104,19 +105,18 @@ export class RegisterComponent implements OnInit {
 
     this.authService.signIn(signInModel).subscribe(a => {
       console.log(a);
-      localStorage.setItem('token', a.auth_token);
-      localStorage.setItem('userId', a.id);
+      this.authService.SetAuthLocalStorage(a);
       this.toast.success('login successful', 'notification');
         // do other login stuff
-      const currentUrl = location.href;
-      UIkit.modal('#modal-auth').hide();
-      // close the modal
-      //
 
-    //  this.store.dispatch(SIGNEDIN());
+      UIkit.modal('#modal-auth').hide();
+
       this.authService.isLogin.next(true);
       console.log('Is login observable', this.authService.isLogin);
       console.log(a);
+      if(!a.data.canLogin){
+        this.router.navigate(['/confirm-email']);
+      }
 
      },
       err => {
@@ -151,10 +151,10 @@ export class RegisterComponent implements OnInit {
      const auth = currentUser.getAuthResponse();
      console.log('current user' , currentUser);
      const token = auth.id_token;
-     this.authService.GoogleSignIn(token).subscribe(a=> {
+     this.authService.GoogleSignIn(token).subscribe( a => {
        console.log(a);
-       localStorage.setItem('token', a.auth_token);
-       localStorage.setItem('userId', a.id);
+
+       this.authService.SetAuthLocalStorage(a);
        this.toast.success('login successful', 'notification');
          // do other login stuff
        const currentUrl = location.href;

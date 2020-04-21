@@ -8,11 +8,11 @@
  <form [formGroup]='registerForm' (ngSubmit)='submit()'>
    <div class="uk-text-center uk-padding-small">
     <span class="uk-text-warning" *ngIf="errorMessage != ''">{{errorMessage}}</span> <br>
-    <span class="uk-text-error" *ngFor="let i of errors"> {{i}} <br> </span>
+
    </div>
 
  <div class="uk-alert uk-alert-danger" *ngIf="hasError">
-
+  <span class="uk-text-error" *ngFor="let i of errors"> {{i}} <br> </span>
  </div>
   <span *ngIf="f.fullname.invalid && (f.fullname.dirty || f.fullname.touched)">
     <span class="uk-text-warning" *ngIf="f.fullname.errors.required" > name required </span>

@@ -1,7 +1,7 @@
 import { IResponseModel } from './../shared/models/IResponseModel';
 import { IForgetModel } from './../auth/auth-model';
 import { RegisterResponseModel, RegisterModel } from './../auth/register-model';
-import { SignInModel, SiginResponseModel } from './../auth/signin-model';
+import { SignInModel, SiginResponseModel, ISignIn } from './../auth/signin-model';
 import { ApiAppUrlService } from './api-app-url.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -21,8 +21,18 @@ export interface IAuth {
 })
 export class AuthService {
 
-  public isLogin:  BehaviorSubject<boolean> = new  BehaviorSubject<boolean>(false);
+  public isLogin:  BehaviorSubject<boolean>;
   constructor(private api: ApiAppUrlService, private http: HttpClient) {
+
+      const userData = this.GetSignInData();
+      console.log('user Data', userData);
+      if(userData != null){
+          this.isLogin = new BehaviorSubject<boolean>(true);
+      }else{
+        this.isLogin = new BehaviorSubject<boolean>(false);
+
+      }
+
    }
 
    public signIn(signInModel: SignInModel): Observable<SiginResponseModel> {
@@ -50,6 +60,23 @@ export class AuthService {
 
   public ConfirmEmail(email: string, token: string): Observable<IResponseModel>{
     return this.http.get<IResponseModel>(this.api.baseApiUrl+`Auth/ConfirmEmail/confirm?userId=${email}&token=${token}`);
+  }
+
+  public SetAuthLocalStorage(a: SiginResponseModel){
+    localStorage.setItem('token', a.data.auth_token);
+    localStorage.setItem('userId', a.data.user.id);
+    localStorage.setItem('user', JSON.stringify(a.data.user));
+    localStorage.setItem('role', JSON.stringify(a.data.roles));
+    localStorage.setItem('siginResponse', JSON.stringify(a.data));
+  }
+  public Logout(){
+    localStorage.clear();
+    this.isLogin.next(false);
+  }
+  public GetSignInData(): ISignIn{
+    const datastr = localStorage.getItem('siginResponse');
+    const data = JSON.parse(datastr) as ISignIn;
+    return data;
   }
 
 

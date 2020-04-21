@@ -12,11 +12,11 @@ const routes: Routes = [
     {path : 'signin', component: LoginComponent},
     {path : 'forget-password', component: ForgetPasswordComponent},
     {path : 'confirm-email', component: ConfirmEmailComponent},
-
+    {path : 'confirm', component: ConfirmEmailComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {  }

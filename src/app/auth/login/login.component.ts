@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { SIGNEDIN } from './../../redux/actions';
 import { IAppState } from './../../redux/store';
 import { ToastrService } from './../../services/toastr.service';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   googleAuth: any;
   constructor(private authService: AuthService, private fb: FormBuilder,
-              private toast: ToastrService, private store: Store<IAppState>
+              private toast: ToastrService, private store: Store<IAppState>,
+              private router: Router
     ) {
 
 
@@ -58,16 +60,14 @@ export class LoginComponent implements OnInit {
 
           this.authService.signIn(data).subscribe(a => {
             console.log(a);
-            localStorage.setItem('token', a.auth_token);
-            localStorage.setItem('userId', a.id);
-            this.toast.success('login successful', 'notification');
-              // do other login stuff
-            const currentUrl = location.href;
-            UIkit.modal('#modal-auth').hide();
-            // close the modal
-            //
 
-          //  this.store.dispatch(SIGNEDIN());
+            this.authService.SetAuthLocalStorage(a);
+            this.toast.success('login successful', 'notification');
+            UIkit.modal('#modal-auth').hide();
+
+            if(!a.data.canLogin){
+              this.router.navigate(['/confirm-email']);
+            }
             this.authService.isLogin.next(true);
             console.log('Is login observable', this.authService.isLogin);
             console.log(a);
@@ -106,19 +106,18 @@ export class LoginComponent implements OnInit {
       console.log('current user' , currentUser);
       const token = auth.id_token;
       this.authService.GoogleSignIn(token).subscribe(a=> {
-        console.log(a);
-        localStorage.setItem('token', a.auth_token);
-        localStorage.setItem('userId', a.id);
+
+        this.authService.SetAuthLocalStorage(a);
         this.toast.success('login successful', 'notification');
-          // do other login stuff
-        const currentUrl = location.href;
+
+
+
         UIkit.modal('#modal-auth').hide();
-        // close the modal
-        //
-      //  this.store.dispatch(SIGNEDIN());
+
+
         this.authService.isLogin.next(true);
         console.log('Is login observable', this.authService.isLogin);
-        console.log(a);
+        location.reload();
       });
     });
   }
