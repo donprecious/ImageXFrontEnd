@@ -16,9 +16,26 @@ export class NavBarComponent implements OnInit {
 
   isSignedIn = false;
   isSignedIn$: Observable<boolean>;
-
+  profileImageurl: string;
   constructor(private authService: AuthService,
-              private router: Router ) { }
+              private router: Router ) {
+                var userData = this.authService.GetSignInData();
+                if(userData != null || userData != undefined){
+                    if(userData.user.profileImageUrl != '' || userData.user.profileImageUrl != null ){
+                      this.profileImageurl =  userData.user.profileImageUrl;
+
+                    }else{
+
+                        if(userData.user.firstName != "" || userData.user.firstName != null){
+                          // tslint:disable-next-line: max-line-length
+                          this.profileImageurl = `https://ui-avatars.com/api/?name=${userData.user.firstName + ' ' + userData.user.lastName }&rounded=true`;
+                        }else{
+                          this.profileImageurl = `https://ui-avatars.com/api/?name=${userData.user.email}&rounded=true`;
+                        }
+
+                    }
+                }
+               }
 
   ngOnInit(): void {
 
@@ -30,12 +47,7 @@ export class NavBarComponent implements OnInit {
       console.log(this.isSignedIn);
   }
 
-   ngDoCheck() {
 
-    this.isSignedIn$ = this.authService.isLogin;
-    console.log('is logged in object change detected', this.isSignedIn$);
-    console.log("is login value change detected", this.isSignedIn);
-  }
 
   logout() {
     this.authService.Logout();

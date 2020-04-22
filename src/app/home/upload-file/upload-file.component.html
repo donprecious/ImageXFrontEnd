@@ -1,16 +1,18 @@
 
 <div class="uk-section-default">
-  <div class="uk-container uk-padding">
+  <div class="uk-padding">
     <div uk-grid>
-      <div  class="uk-width-1-3@m" >  <div id="upload" class=""></div>
+      <div   [class]= "{'uk-width-1-3@m': hasUploaded, 'uk-width-1-1': !hasUploaded}" >
+          <div id="upload"></div>
+      </div>
 
-
-    </div>
-
-      <div class="" *ngIf ="uploadedImage.length>0"  >
+      <div *ngIf ="uploadedImage.length>0"  >
         <form #myform="ngForm" (ngSubmit)="submitForm(myform)" >
         <div *ngFor='let i of uploadedImage' class="uk-clearfix uk-card uk-card-body uk-card-default" >
-         <img width="200" src="{{i.image}}"  class="uk-float-left uk-border-rounded">
+
+         <img width="200" *ngIf="i.fileType == 'image'"  src="{{i.image}}"  class="uk-float-left uk-border-rounded">
+         <video width="200"  src="{{i.image}}" controls playsinline   *ngIf="i.fileType == 'video'" class="uk-float-left uk-border-rounded" uk-video="autoplay: false"></video>
+
          <div class="uk-float-right uk-inline uk-margin-small-left">
            <mat-form-field   class="uk-width-expand">
              <mat-label  >Title</mat-label>
@@ -41,7 +43,7 @@
          </div>
         </div>
         <button mat-raised-button class="uk-width-expand" [disabled]="!myform.form.valid" type="submit" color="primary">Publish</button>
-      </form>
+        </form>
       </div>
 
 

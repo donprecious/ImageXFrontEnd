@@ -1,3 +1,4 @@
+import { LoaderComponent } from './components/loader/loader.component';
 import { StoreModule } from '@ngrx/store';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -19,7 +20,7 @@ import { approotReducer } from '../redux/store';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ LoaderComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature('root', approotReducer ),
@@ -35,8 +36,8 @@ import { approotReducer } from '../redux/store';
     FormsModule,
     MatSelectModule,
     MultiSelectModule,
-    MatAutocompleteModule
-    // MaterialComponentModuleModule
+    MatAutocompleteModule,
+
 
   ]
 })

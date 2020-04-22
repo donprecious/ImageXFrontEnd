@@ -9,6 +9,7 @@ import { ApiAppUrlService } from './../../services/api-app-url.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 declare var Uppy: any;
 declare var google: any;
 
@@ -24,6 +25,7 @@ export class UploadFileComponent implements OnInit {
  uploadedImage = [];
  categories: ICategory[];
  place: IPlaceSeachResponse;
+ hasUploaded = false;
 tags = [];
   constructor(private api: ApiAppUrlService, private categoryService: CategoryService,
               private tagService: TagService, private imageService: ImageService,
@@ -36,7 +38,8 @@ ngOnInit(): void {
            this.uppy = Uppy.Core()
           .use(Uppy.Dashboard, {
             inline: true,
-            target: '#upload'
+            target: '#upload',
+            width: '100%'
           })
           .use(Uppy.XHRUpload,  {endpoint: `${this.api.baseApiUrl}image/UploadFiles`})
           .use(Uppy.Webcam, {
@@ -44,29 +47,30 @@ ngOnInit(): void {
             mode: ['video-audio', 'picture'],
             mirror: true
             });
-           // .use(Uppy.Facebook, { target: Uppy.Dashboard, companionUrl: 'https://companion.uppy.io' });
-
-           this.uppy.on('complete', (result) => {
-                console.log('Upload complete! We’ve uploaded these files:', result.successful);
-                });
 
                     // initialize category
            this.categoryService.getAll().subscribe(a => {
                       this.categories = a;
-                      console.log('categories recieved', a);
                     });
            this.tagService.getAll().subscribe( a => {
                       for (const i of a) {
                        this.tags.push(i.name);
                       }
-                      console.log("tags Recieved", a);
+
                     });
+
+                  // listen if uploadedFiles has been removed
+           if(this.uploadedImage.length <= 0) {
+                    this.hasUploaded = false ;
+                  }
   }
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
     this.uppy.on('upload-success', (file, response) => {
       console.log('response ', response);
       console.log('response file', file);
+      const fileType = file.data.type.split('/')[0].toLowerCase();
+
       const url = response.uploadURL;
       const obj = {
         id : this.uploadedImage.length + 1 ,
@@ -76,11 +80,12 @@ ngOnInit(): void {
         categoryId: '',
         address: '',
         lat : '',
-        lng: ''
+        lng: '',
+        fileType: fileType
       };
 
       this.uploadedImage.push(obj);
-
+      this.hasUploaded = true;
 
       setTimeout(()=>{ this.initAutoCompete(obj.id);} , 5000);
       console.log(this.uploadedImage);
@@ -92,8 +97,6 @@ ngOnInit(): void {
   }
 
   searchPlace() {
-
-
   }
 
   initAutoCompete(id) {
@@ -133,6 +136,7 @@ ngOnInit(): void {
             location: i.address,
             imageUrl: i.image,
             tag: i.tagIds,
+            fileType: i.fileType
           } as ICreateImageModel;
           images.push(image);
         }

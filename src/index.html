@@ -11,6 +11,29 @@
   <meta name="google-signin-client_id" content="473446857855-9fmn8dnefe3b9mvm046sdq35echrss1l.apps.googleusercontent.com">
 </head>
 <body class="mat-typography">
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '907248139705642',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v6.0'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
   <app-root></app-root>
 
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyXDcpICpy-AnVTTwEj6Qiywon3SMqy7w&libraries=places" async defer></script>

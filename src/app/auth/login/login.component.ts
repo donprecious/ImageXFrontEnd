@@ -10,6 +10,11 @@ import { Store, select } from '@ngrx/store';
 
 declare var UIkit: any;
 declare var gapi: any;
+
+// facebook declarations
+declare var FB: any;
+declare var  statusChangeCallback: any;
+// end of facebook decla
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,13 +26,11 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   loginForm: FormGroup;
   googleAuth: any;
+  loading: false;
   constructor(private authService: AuthService, private fb: FormBuilder,
               private toast: ToastrService, private store: Store<IAppState>,
               private router: Router
     ) {
-
-
-
     }
 
 
@@ -120,5 +123,31 @@ export class LoginComponent implements OnInit {
         location.reload();
       });
     });
+  }
+
+  siginWithFacebook(){
+    FB.login((response) => {
+      // handle the response
+      if(response.status === "connected"){
+        this.authService
+        .FacebookSignIn(response.authResponse.userID, response.authResponse.accessToken)
+        .subscribe(a=> {
+          this.authService.SetAuthLocalStorage(a);
+          this.authService.isLogin.next(true);
+          this.toast.success('login successful');
+          location.reload();
+
+        }, err => {
+          console.log(err)
+          this.toast.error(err.error.message);
+
+        });
+      } else {
+        // cant login
+        this.toast.error('cant login', 'notification');
+
+      }
+      console.log(response);
+    },  {scope: 'email,public_profile'});
   }
 }
