@@ -44,8 +44,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                       break;
                     }
 
-                    this.toast.error("something went wrong");
-                    break;
+
               }
           }
       } else {
@@ -54,7 +53,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
           this.message = this.errorService.getClientErrorMessage(error);
           this.toast.error(this.message);
       }
-        return throwError(error.message);
+        return throwError(error);
       })
     );
   }

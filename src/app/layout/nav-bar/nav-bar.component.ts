@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Observable } from 'rxjs';
-import { IAppState } from './../../redux/store';
+
 import { Component, OnInit } from '@angular/core';
 
-import { Store, select } from '@ngrx/store';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -17,23 +17,32 @@ export class NavBarComponent implements OnInit {
   isSignedIn = false;
   isSignedIn$: Observable<boolean>;
 
-  constructor(private store: Store<IAppState>, private authService: AuthService,
+  constructor(private authService: AuthService,
               private router: Router ) { }
 
   ngOnInit(): void {
 
       // this.isSignedIn$ = this.store.pipe(select('isSignedIn'));
+
+
       this.isSignedIn$ = this.authService.isLogin;
       console.log('is logged in object', this.isSignedIn$);
       console.log(this.isSignedIn);
+  }
 
+   ngDoCheck() {
+
+    this.isSignedIn$ = this.authService.isLogin;
+    console.log('is logged in object change detected', this.isSignedIn$);
+    console.log("is login value change detected", this.isSignedIn);
   }
 
   logout() {
-    localStorage.clear();
-    this.authService.isLogin.next(false);
+    this.authService.Logout();
     this.router.navigate(['/']);
   }
+
+
 
 
 }
