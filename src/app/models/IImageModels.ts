@@ -1,6 +1,5 @@
 import { IImageTag } from './TagModel';
 import { ICategory } from './CategoryModels';
-
 import { IUser } from './IUserModel';
 
 
@@ -13,8 +12,10 @@ export interface IImage {
 	location?: any;
 	geoLat: number;
 	geoLog: number;
-	Categoryid: number;
-	Userid: string;
+	categoryid: number;
+  userid: string;
+  fileType: string;
+
 }
 
 export interface ITag {
@@ -35,7 +36,8 @@ export interface IImageModel {
 	geoLat: number;
 	geoLog: number;
 	Categoryid: number;
-	Userid: string;
+  Userid: string;
+  fileType: string;
 	user: IUser;
 	category: ICategory;
 	imageTag: IImageTag[];
@@ -50,7 +52,8 @@ export interface ICreateImageModel {
 	geoLat: number;
 	geoLog: number;
 	categoryId: number;
-	userId: string;
+  userId: string;
+  fileType: string;
 	tag: string[];
 }
 export interface User {
@@ -70,7 +73,8 @@ export interface Image {
 	geoLat: number;
 	geoLog: number;
 	categoryId: number;
-	userId: string;
+  userId: string;
+  fileType: string;
 }
 
 export interface IContentCollection {

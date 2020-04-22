@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { IUser } from '../models/IUserModel';
 
+
+
+
 export interface IAuth {
   isLoggedId: boolean;
   token: string;
@@ -50,7 +53,9 @@ export class AuthService {
    public GoogleSignIn(token): Observable<SiginResponseModel> {
      return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/GoogleAuth', { 'idToken': token});
    }
-
+   public FacebookSignIn(userId, token): Observable<SiginResponseModel> {
+    return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/FacebookAuth', { 'token': token, 'userId': userId});
+  }
   public SendForgetPassword( forget: IForgetModel): Observable<IResponseModel> {
     return this.http.post<IResponseModel>(this.api.baseApiUrl + 'Auth/ForgotPassword/forgot', forget);
   }
@@ -78,6 +83,7 @@ export class AuthService {
     const data = JSON.parse(datastr) as ISignIn;
     return data;
   }
+
 
 
 }

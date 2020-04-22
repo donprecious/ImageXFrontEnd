@@ -36,14 +36,13 @@
 
   <span *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
     <span class="uk-text-warning" *ngIf="f.password.errors.required" > Password required <br></span>
-    <span class="uk-text-warning" *ngIf="f.password.errors.minLength" > Password should be at least 6 charaters <br></span>
+    <span class="uk-text-warning" *ngIf="f.password.value.length < 6" > Password should be at least 6 charaters <br></span>
   </span>
 
 <mat-form-field   class="uk-width-expand">
   <mat-label  >Password</mat-label>
-  <input type="password" formControlName="password"  matInput placeholder="Password" required>
+  <input type="password" minlength="6" formControlName="password"   matInput placeholder="Password" required>
 </mat-form-field>
-
 <span *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
   <span class="uk-text-warning" *ngIf="f.confirmPassword.errors.required" > Confirm Password required <br></span>
   <span class="uk-text-warning" *ngIf="f.confirmPassword.errors.mustMatch" > Confirm Password must match <br></span>
