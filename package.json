@@ -26,6 +26,7 @@
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
     "@syncfusion/ej2-angular-dropdowns": "^17.4.51",
+    "exif-js": "^2.3.0",
     "filepond-plugin-file-validate-size": "^2.2.0",
     "filepond-plugin-file-validate-type": "^1.2.4",
     "filepond-plugin-image-validate-size": "^1.2.3",

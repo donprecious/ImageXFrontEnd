@@ -28,12 +28,14 @@
        </div>
       </div>
       <div class="uk-clearfix uk-flex uk-margin-top">
-        <div class='uk-box-shadow-bottom uk-width-1-2 uk-height-1-2 uk-margin-auto'>
+        <div class='uk-box-shadow-bottom uk-width-1-2@m uk-width-1-1@s uk-height-1-2 uk-margin-auto'>
           <h1 class="uk-text-center text-style-1 text-dark">{{image.name}}   <span class="text-style-2" style="font-size: 1.2rem;"> - {{image.category.name}}</span></h1>
 
             <span class="tag text-style-2" *ngFor="let tag of image.imageTag" >{{tag.tag.name}}</span>
 
-          <img  class="uk-float-left uk-margin-top uk-box-shadow-bottom" src="{{image.imageUrl}}">
+          <img *ngIf="image.fileType=='image'||image.fileType==null"  class="uk-margin-top uk-box-shadow-bottom" src="{{image.imageUrl}}">
+        <video  src="{{image.imageUrl}}"  muted controls *ngIf="image.fileType == 'video'" class="uk-float-left uk-margin-top uk-box-shadow-bottom uk-border-rounded" uk-video=""></video>
+
         </div>
       </div>
 
@@ -47,7 +49,7 @@
       <button mat-raised-button   #like1 (click)='addLike(like1, image.id)'    class="uk-float-right bg-red"> <i class='fa fa-heart'></i></button>
      </div>
      <div class="uk-clearfix uk-flex uk-margin-top">
-      <div class='uk-margin-auto info-div uk-padding uk-text-center uk-width-1-3@s'>
+      <div class='uk-margin-auto uk-border-rounded info-div uk-padding uk-text-center uk-width-1-3@s'>
         <h3 class="text-style-2"> Photo Info </h3>
         <p> Dimension: <b>w 3000, h 500</b></p>
         <p> Size: <b>4 mb</b></p>

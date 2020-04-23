@@ -11,7 +11,7 @@
         <div *ngFor='let i of uploadedImage' class="uk-clearfix uk-card uk-card-body uk-card-default" >
 
          <img width="200" *ngIf="i.fileType == 'image'"  src="{{i.image}}"  class="uk-float-left uk-border-rounded">
-         <video width="200"  src="{{i.image}}" controls playsinline   *ngIf="i.fileType == 'video'" class="uk-float-left uk-border-rounded" uk-video="autoplay: false"></video>
+         <video width="200"  src="{{i.image}}" controls muted playsinline uk-video="autoplay: inview; automute: true"   *ngIf="i.fileType == 'video'" class="uk-float-left uk-border-rounded"></video>
 
          <div class="uk-float-right uk-inline uk-margin-small-left">
            <mat-form-field   class="uk-width-expand">
@@ -29,7 +29,8 @@
            <ejs-multiselect [(ngModel)]="i.tags" name="tags_{{i.id}}" (ngModelChange)="inputChange($event)" id='multiselectelement' [allowCustomValue]='true' [allowFiltering]='true' [maximumSelectionLength]='5' [dataSource]='tags' placeholder="Tags"></ejs-multiselect>
 
            <mat-form-field class="uk-width-expand">
-             <mat-label  >Where is this photo taken</mat-label>
+             <mat-label  > <span *ngIf="i.fileType == 'image'" ></span> Where is this photo taken</mat-label>
+             <mat-label  > <span *ngIf="i.fileType == 'video'" ></span> Video Source (location)</mat-label>
              <input type="text" name="search_{{i.id}}"
                      #search
                     placeholder="search for place"

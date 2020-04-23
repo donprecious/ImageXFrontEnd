@@ -1,7 +1,10 @@
 <div class="uk-inline uk-transition-toggle" tabindex="0">
   <a [routerLink]="['/view', image.id]">
-    <img data-src="{{image.imageUrl}}" uk-height-medium  width=""  class="uk-border-rounded" alt="" uk-img></a>
 
+    <img data-src="{{image.imageUrl}}" uk-height-medium  width=""  class="uk-border-rounded" alt="" uk-img>
+    <img data-src="{{image.imageUrl}}" *ngIf="image.fileType=='image'||image.fileType==null" width=""  class="uk-border-rounded" height="" alt="" uk-img>
+    <video  src="{{image.imageUrl}}" loop muted playsinline uk-video="autoplay: inview; automute: true"  *ngIf="image.fileType == 'video'" class="uk-float-left uk-border-rounded"></video>
+  </a>
   <div class="uk-overlay uk-overlay-primary   uk-position-bottom uk-transition-fade" style="padding:15px">
     <div class="uk-clearfix">
       <a class="uk-float-left"  >
