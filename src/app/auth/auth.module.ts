@@ -9,10 +9,11 @@ import { LoginComponent } from './login/login.component';
 import { AuthComponent } from './auth/auth.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgetPasswordComponent, ConfirmEmailComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgetPasswordComponent, ConfirmEmailComponent, ResetPasswordComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
