@@ -67,6 +67,7 @@ export class AuthService {
     return this.http.get<IResponseModel>(this.api.baseApiUrl+`Auth/ConfirmEmail/confirm?userId=${email}&token=${token}`);
   }
 
+
   public SetAuthLocalStorage(a: SiginResponseModel){
     localStorage.setItem('token', a.data.auth_token);
     localStorage.setItem('userId', a.data.user.id);
