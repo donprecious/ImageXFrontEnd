@@ -10,7 +10,7 @@
       <div class="uk-clearfix">
        <div class="uk-float-left">
              <img  class="uk-float-left uk-border-circle uk-margin" width="100" src="{{profileUrl}}">
-             <span class="uk-margin-small-left">{{ image.user.firstName }} {{image.user.lastName }}</span> <br>  <br>
+             <span class="uk-margin-small-left">{{ image?.user.firstName }} {{image?.user.lastName }}</span> <br>  <br>
              <span class="uk-margin-small-left">1.7k fellower</span>
              <span class="uk-margin-small-left">{{viewsfig}} Views</span>
              <div class="uk-inline">
@@ -31,9 +31,12 @@
         <div class='uk-box-shadow-bottom uk-width-1-2@m uk-width-1-1@s uk-height-1-2 uk-margin-auto'>
           <h1 class="uk-text-center text-style-1 text-dark">{{image.name}}   <span class="text-style-2" style="font-size: 1.2rem;"> - {{image.category.name}}</span></h1>
 
-            <span class="tag text-style-2" *ngFor="let tag of image.imageTag" >{{tag.tag.name}}</span>
+          <div class="uk-align-center uk-text-center">
+            <span class="tag uk-text-center text-style-2" *ngFor="let tag of image.imageTag" >{{tag.tag.name}}</span>
+          </div>
 
-          <img *ngIf="image.fileType=='image'||image.fileType==null"  class="uk-margin-top uk-box-shadow-bottom" src="{{image.imageUrl}}">
+
+          <img *ngIf="image.fileType=='image'||image.fileType==null" id="image-view"  class="uk-margin-top uk-box-shadow-bottom" src="{{image.imageUrl}}">
         <video  src="{{image.imageUrl}}"  muted controls *ngIf="image.fileType == 'video'" class="uk-float-left uk-margin-top uk-box-shadow-bottom uk-border-rounded" uk-video=""></video>
 
         </div>
@@ -50,11 +53,16 @@
      </div>
      <div class="uk-clearfix uk-flex uk-margin-top">
       <div class='uk-margin-auto uk-border-rounded info-div uk-padding uk-text-center uk-width-1-3@s'>
-        <h3 class="text-style-2"> Photo Info </h3>
-        <p> Dimension: <b>w 3000, h 500</b></p>
-        <p> Size: <b>4 mb</b></p>
-        <p> Camera: <b></b></p>
-        <p> Location: <b>India</b></p>
+        <div *ngIf="image.fileType != 'video'" >
+          <h3 class="text-style-2"> Photo Info </h3>
+          <p> Dimension(px): <b>w {{image.fileInfo.width}}, h {{image.fileInfo.height}}</b></p>
+          <p> Size: <b> {{image.fileInfo.fileSize}}</b></p>
+          <p> Camera: <b>{{image.fileInfo.model}}</b></p>
+          <p> Software: <b>{{image.fileInfo.software}}</b></p>
+          <p> Location: <b>{{image.location}}</b></p>
+          <div *ngFor="let color of image.colors" style="width: 20px; display: inline-block; height: 20px; padding: 0; margin:5px; border-radius: 20px;  background-color: {{color.code}}"> </div>
+        </div>
+   
       </div>
 
     </div>

@@ -1,6 +1,6 @@
 import { ToastrService } from './../../services/toastr.service';
 import { ImageService } from './../../services/image.service';
-import { ICreateImageModel } from './../../models/IImageModels';
+import { ICreateImageModel, FileInfoModel, CreateColorModel } from './../../models/IImageModels';
 import { TagService } from './../../services/tag.service';
 import { IPlaceSeachResponse } from './../../services/google-place.service';
 import { CategoryService } from './../../services/category.service';
@@ -10,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+declare var Vibrant: any;
 declare var Uppy: any;
 declare var google: any;
-
-
+declare var loadImage: any;
 
 @Component({
   selector: 'app-upload-file',
@@ -30,7 +32,8 @@ tags = [];
   constructor(private api: ApiAppUrlService, private categoryService: CategoryService,
               private tagService: TagService, private imageService: ImageService,
               private router: Router,
-              private  toast: ToastrService
+              private  toast: ToastrService,
+              private ngxService: NgxUiLoaderService
               ) { }
  uppy: any;
 ngOnInit(): void {
@@ -60,7 +63,7 @@ ngOnInit(): void {
                     });
 
                   // listen if uploadedFiles has been removed
-           if(this.uploadedImage.length <= 0) {
+           if (this.uploadedImage.length <= 0) {
                     this.hasUploaded = false ;
                   }
   }
@@ -70,27 +73,96 @@ ngOnInit(): void {
       console.log('response ', response);
       console.log('response file', file);
       const fileType = file.data.type.split('/')[0].toLowerCase();
-
+      const fileSize = (file.data.size / (1024 * 1024)).toFixed(2);
       const url = response.uploadURL;
       const obj = {
         id : this.uploadedImage.length + 1 ,
         image:  url,
         title: '',
-        tagIds: [],
         categoryId: '',
         address: '',
         lat : '',
         lng: '',
-        fileType: fileType
+        fileType,
+        fileInfo: {
+          artist: 'n/a',
+          duration: 'n/a',
+          fileSize: fileSize + ' mb',
+          genre: 'n/a',
+          height: 'n/a',
+          model: 'n/a',
+          software: 'n/a',
+          width: 'n/a',
+        } as FileInfoModel,
+        colors: [] as CreateColorModel[]
       };
+      // show loader
+      this.ngxService.startLoader('loader-01');
+      if (fileType=== "image"){
+        loadImage(
+          'https://cors-anywhere.herokuapp.com/' +  url,
+           (img, data) => {
+            if (img.type === 'error') {
+              console.error('Error loading image ' + url);
+            } else {
+              console.log('Loaded image data: ', data);
 
-      this.uploadedImage.push(obj);
-      this.hasUploaded = true;
+              obj.fileInfo.height = data.originalHeight;
+              obj.fileInfo.width = data.originalWidth;
+              if (data.exif != undefined) {
+                const allTags = data.exif.getAll();
+                console.log('Loaded image exif tag data: ', allTags);
+                obj.fileInfo.model =allTags.Make + ' / ' + allTags.Model;
+                obj.fileInfo.software = allTags.Software;
+              }
 
-      setTimeout(()=>{ this.initAutoCompete(obj.id);} , 5000);
-      console.log(this.uploadedImage);
-          });
+              // get color palate
+              Vibrant.from('https://cors-anywhere.herokuapp.com/' + url).getPalette()
+              .then((palette) => {
+                console.log( "vibrant palater", palette);
+                obj.colors.push( {code: palette.LightVibrant.hex, level: 'LightVibrant' }as CreateColorModel);
+                obj.colors.push( {code: palette.Vibrant.hex , level: 'Vibrant' }as CreateColorModel);
+                obj.colors.push( {code: palette.LightMuted.hex, level: 'LightMuted'}as CreateColorModel);
+                obj.colors.push( {code: palette.DarkMuted.hex, level: 'DarkMuted' }as CreateColorModel);
+                obj.colors.push( {code: palette.DarkVibrant.hex, level: 'DarkVibrant' }as CreateColorModel);
+                obj.colors.push( {code: palette.Muted.hex, level: 'Muted' }as CreateColorModel);
 
+
+                this.uploadedImage.push(obj);
+                this.hasUploaded = true;
+
+                setTimeout(() => { this.initAutoCompete(obj.id); } , 5000);
+             
+                this.ngxService.stopLoader('loader-01');
+
+              }).
+              catch(err=> {
+                console.log('vibrant error ', err);
+                this.ngxService.stopLoader('loader-01');
+
+              });
+
+
+            }
+          } , { meta: true , canvas: true, }
+        );
+      } else
+      if (fileType === 'video'){
+        let video = document.createElement("video");
+        video.src = url;
+        setTimeout(() => {
+          obj.fileInfo.duration = (video.duration / 60) .toString() + 'min(s)';
+          obj.fileInfo.width = video.videoWidth.toString();
+          obj.fileInfo.height = video.videoHeight.toString();
+          this.uploadedImage.push(obj);
+          this.hasUploaded = true;
+
+          setTimeout(() => { this.initAutoCompete(obj.id); } , 5000);
+          console.log("ready  files for submit", this.uploadedImage);
+          this.ngxService.stopLoader('loader-01');
+        }, 3000);
+      }
+    });
 }
   inputChange(event: any) {
     console.log('input changes', event, 'uploaded Images', this.uploadedImage);
@@ -121,11 +193,11 @@ ngOnInit(): void {
 
   submitForm(myForm: NgForm) {
 
-      console.log("form is submited", myForm);
+      console.log('form is submited', myForm);
       console.log('form State ', myForm.valid);
       if (myForm.valid) {
-        let images: ICreateImageModel[] = [];
-        for(const i of this.uploadedImage){
+        const images: ICreateImageModel[] = [];
+        for (const i of this.uploadedImage) {
           const image = {
             userId: localStorage.getItem('userId'),
             categoryId: i.categoryId,
@@ -135,8 +207,11 @@ ngOnInit(): void {
             geoLog: i.lng,
             location: i.address,
             imageUrl: i.image,
-            tag: i.tagIds,
-            fileType: i.fileType
+            tag: i.tags,
+            fileType: i.fileType,
+            fileInfo: i.fileInfo,
+            colors: i.colors
+
           } as ICreateImageModel;
           images.push(image);
         }

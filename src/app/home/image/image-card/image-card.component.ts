@@ -62,9 +62,11 @@ export class ImageCardComponent implements OnInit {
    } as ILike;
     this.imageService.createLike(obj).subscribe(a => {
       console.log(a);
-      // this.toast.success('Added to collection');
-      console.log(html);
-      $(html).css('color', '#9e0303');
+      if(a.data.liked){
+        $(html).css('color', '#9e0303');
+      }else{
+        $(html).css('color', '#fff');
+      }
    }, err => {
      console.log(err);
    });

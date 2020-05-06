@@ -14,7 +14,7 @@ export class MyUploadsComponent implements OnInit {
   constructor(private imageService: ImageService) { }
   images: IImageModel[];
   displayType = 'myupload';
-
+  
   ngOnInit() {
     this.imageService.getMyUploads().subscribe(a=> {
       this.images = a;

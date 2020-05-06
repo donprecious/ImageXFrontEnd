@@ -14,6 +14,7 @@ export class UsersImageCardComponent implements OnInit {
 
   @Input() image: IImageModel;
   @Input() displayType;
+  @Input() currentItem;
   profileUrl: string;
   viewsfig: any;
   contributorViews: any;
@@ -46,8 +47,14 @@ export class UsersImageCardComponent implements OnInit {
 
   }
 
- delete(id) {
-
+  delete(id: number){
+    this.imageService.deleteImage(id).subscribe(a=> {
+      if(a.status === "success") {
+          this.toast.success('item deleted');
+          console.log("current element", this.currentItem);
+          $("#image_div_" + id).remove();
+      }
+    });
   }
 
   getViews(id) {
@@ -63,20 +70,18 @@ export class UsersImageCardComponent implements OnInit {
       userId
    } as ILike;
     this.imageService.createLike(obj).subscribe(a => {
-      console.log(a);
-      // this.toast.success('Added to collection');
-      console.log(html);
-      $(html).css('color', '#9e0303');
+      if(a.data.liked){
+        $(html).css('color', '#9e0303');
+      }else{
+        $(html).css('color', '#fff');
+      }
    }, err => {
      console.log(err);
    });
 
   }
 
-  deleteFromCollection(id){
-
-  }
-
+ 
   getContribitorsViews(id) {
     this.imageService.countContributorViews(id).subscribe( a => {
        this.contributorViews =   helpers.convertNumsToShortWords(a);
@@ -95,11 +100,20 @@ export class UsersImageCardComponent implements OnInit {
     this.toast.success('Added to collection');
     console.log(html);
     $(html).css('color', '#9e0303');
+
  }, err => {
    console.log(err);
  });
 }
 
+deleteFromCollection(id: number){
+  this.imageService.deleteCollection(id).subscribe(a=> {
+    if(a.status === "success") {
+        this.toast.success('item removed from collection removed');
+        $("#image_div_" + id).remove();
+    }
+  });
+}
 
 
 }

@@ -1,8 +1,8 @@
 <div class='uk-section'>
   <div class="uk-container uk-container-large">
     <h2 class="text-style-1 uk-text-center">My Collections</h2>
-    <div class="uk-child-width-1-3@s uk-child-width-1-4@m" uk-grid>
-      <app-users-image-card  [displayType]='displayType' *ngFor="let i of images"  [image]="i" ></app-users-image-card>
+    <div class="uk-child-width-1-3@s uk-child-width-1-4@m" uk-grid="masonry: true">
+      <app-users-image-card  [displayType]='displayType' id="image_div_{{i.id}}"  #currentItem [currentItem]= 'currentItem' *ngFor="let i of images"  [image]="i" ></app-users-image-card>
     </div>
   </div>
 </div>

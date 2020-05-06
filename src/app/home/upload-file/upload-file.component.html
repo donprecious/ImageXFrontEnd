@@ -40,9 +40,17 @@
                      id='search_{{i.id}}'
                     >
            </mat-form-field>
+           <div class="uk-text uk-text-center">
+
+            <div *ngFor="let color of i.colors" style="width: 30px; display: inline-block; height: 30px; padding: 0; margin:5px; border-radius: 20px;  background-color: {{color.code}}"> </div>
+
 
          </div>
+         </div>
+
+
         </div>
+        <div></div>
         <button mat-raised-button class="uk-width-expand" [disabled]="!myform.form.valid" type="submit" color="primary">Publish</button>
         </form>
       </div>
@@ -52,4 +60,4 @@
   </div>
 </div>
 
-
+<ngx-ui-loader [loaderId]="'loader-01'" text="processing upload"></ngx-ui-loader>

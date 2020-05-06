@@ -1,4 +1,5 @@
-import { IImageModel, ICreateImageModel, IContentCollection, ILike, IImageGeoInfo, IGeoJson } from './../models/IImageModels';
+import { IResponseModel } from './../shared/models/IResponseModel';
+import { IImageModel, ICreateImageModel, IContentCollection, ILike, IImageGeoInfo, IGeoJson, ILikeToggleResponse } from './../models/IImageModels';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiAppUrlService } from './api-app-url.service';
@@ -20,13 +21,18 @@ public getAllImages(): Observable<IImageModel[]> {
  public create(images: ICreateImageModel[]): Observable<IImageModel> {
   return this.http.post<IImageModel>( this.api.baseApiUrl + 'Image/Create',  images);
  }
-
+ public deleteImage(id: number): Observable<IResponseModel> {
+  return this.http.delete<IResponseModel>(this.api.baseApiUrl + 'image/delete/' + id);
+}
  public createCollection(collection: IContentCollection): Observable<IContentCollection> {
     return this.http.post<IContentCollection>(this.api.baseApiUrl + 'Image/CreateCollection', collection);
  }
+ public deleteCollection(id: number) : Observable<IResponseModel> {
+   return this.http.delete<IResponseModel>(this.api.baseApiUrl + 'image/deleteCollection/' + id);
+ }
 
- public createLike(collection: ILike): Observable<ILike> {
-    return this.http.post<ILike>(this.api.baseApiUrl + 'Image/Like', collection);
+ public createLike(collection: ILike): Observable<ILikeToggleResponse> {
+    return this.http.post<ILikeToggleResponse>(this.api.baseApiUrl + 'Image/LikeToggle', collection);
  }
  public getAllImageGeoInfo() : Observable<IGeoJson>{
    return this.http.get<IGeoJson>(this.api.baseApiUrl+"image/GetAllImageGeoJSON")

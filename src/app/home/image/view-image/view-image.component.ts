@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'src/app/services/toastr.service';
 declare var $: any;
 declare var helpers: any;
+
+
 @Component({
   selector: 'app-view-image',
   templateUrl: './view-image.component.html',
@@ -19,16 +21,16 @@ export class ViewImageComponent implements OnInit {
     private router: Router,
     private imageService: ImageService,
     private toast: ToastrService
-  ) { }
+  ) {
+   }
 
-  image: IImageModel;
+  image: IImageModel = null;
 
   likesfig='';
 
 
   viewsfig = '';
  contributorViews = '';
-
   profileUrl: string;
 
   ngOnInit(): void {
@@ -39,13 +41,14 @@ export class ViewImageComponent implements OnInit {
     //     return this.imageService.get(id);
     //   })
     // );
+
     this.route.paramMap.subscribe(a => {
           const id =  a.get('id');
           console.log('params, ' , a);
           console.log('id, ' ,id);
           this.imageService.get(id).subscribe(img => {
+              console.log("image recieved", img);
             this.image = img;
-
             if ( this.image.user.profileImageUrl !== null) {
               this.profileUrl = this.image.user.profileImageUrl;
             } else if ( this.image.user.firstName !== null ) {
@@ -58,8 +61,16 @@ export class ViewImageComponent implements OnInit {
             this.getLikes(id);
             this.getViews(id);
             this.getContribitorsViews(id);
+
+
+
+
+
           });
     });
+
+
+
   }
   addCollection(html: any, id) {
     const userId = localStorage.getItem('userId');
@@ -86,7 +97,11 @@ addLike(html: any, id) {
       console.log(a);
       // this.toast.success('Added to collection');
       console.log(html);
-      $(html).css('color', '#9e0303');
+      if(a.data.liked){
+        $(html).css('color', '#9e0303');
+      }else{
+        $(html).css('color', '#fff');
+      }
       this.getLikes(id);
 
     }, err => {
@@ -114,5 +129,6 @@ addLike(html: any, id) {
 
       });
    }
+
 
 }

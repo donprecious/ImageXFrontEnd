@@ -17,7 +17,7 @@ import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { approotReducer } from '../redux/store';
-
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
   declarations: [ LoaderComponent],
@@ -37,7 +37,7 @@ import { approotReducer } from '../redux/store';
     MatSelectModule,
     MultiSelectModule,
     MatAutocompleteModule,
-
+    NgxUiLoaderModule
 
   ]
 })
