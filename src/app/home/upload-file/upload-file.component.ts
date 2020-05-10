@@ -25,6 +25,7 @@ declare var loadImage: any;
 export class UploadFileComponent implements OnInit {
 
  uploadedImage = [];
+ uploadCount = 0;
  categories: ICategory[];
  place: IPlaceSeachResponse;
  hasUploaded = false;
@@ -44,11 +45,15 @@ ngOnInit(): void {
             target: '#upload',
             width: '100%'
           })
-          .use(Uppy.XHRUpload,  {endpoint: `${this.api.baseApiUrl}image/UploadFiles`})
+          .use(Uppy.XHRUpload,  
+            {
+              endpoint: `${this.api.baseApiUrl}image/UploadFiles`, 
+              limit: 1
+            }
+            )
           .use(Uppy.Webcam, {
             target: Uppy.Dashboard,
-            mode: ['video-audio', 'picture'],
-            mirror: true
+            mode: ['video-audio', 'picture']
             });
 
                     // initialize category
@@ -66,17 +71,20 @@ ngOnInit(): void {
            if (this.uploadedImage.length <= 0) {
                     this.hasUploaded = false ;
                   }
+           this.uploadSuccessInit();
   }
   // tslint:disable-next-line: use-lifecycle-interface
-  ngAfterViewInit() {
+  uploadSuccessInit() {
     this.uppy.on('upload-success', (file, response) => {
       console.log('response ', response);
       console.log('response file', file);
       const fileType = file.data.type.split('/')[0].toLowerCase();
       const fileSize = (file.data.size / (1024 * 1024)).toFixed(2);
       const url = response.uploadURL;
+      this.uploadCount += 1;
+      const id = this.uploadCount;
       const obj = {
-        id : this.uploadedImage.length + 1 ,
+        id : id,
         image:  url,
         title: '',
         categoryId: '',
@@ -131,7 +139,7 @@ ngOnInit(): void {
                 this.uploadedImage.push(obj);
                 this.hasUploaded = true;
 
-                setTimeout(() => { this.initAutoCompete(obj.id); } , 5000);
+                setTimeout(() => { this.initAutoCompete(id); } , 2000);
              
                 this.ngxService.stopLoader('loader-01');
 
@@ -173,7 +181,8 @@ ngOnInit(): void {
 
   initAutoCompete(id) {
 
-    const autocomplete = new google.maps.places.Autocomplete(document.getElementById('search_' + id), {types: ['geocode']});
+    const doc = document.getElementById('search_' + id);
+    const autocomplete = new google.maps.places.Autocomplete(doc, {types: ['geocode']});
     autocomplete.setFields(['formatted_address', 'name', 'geometry']);
     autocomplete.addListener('place_changed', () => {
      const place = autocomplete.getPlace();

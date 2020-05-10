@@ -154,6 +154,7 @@ export interface Feature {
 }
 
 export interface IGeoJson {
-	type: string;
-	features: Feature[];
+  type: string;
+  features: Feature[];
 }
+

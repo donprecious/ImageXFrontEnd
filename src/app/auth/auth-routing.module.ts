@@ -13,7 +13,9 @@ const routes: Routes = [
     {path : 'signin', component: LoginComponent},
     {path : 'forget-password', component: ForgetPasswordComponent},
     {path : 'confirm-email', component: ConfirmEmailComponent},
+ 
     {path : 'reset-password', component: ResetPasswordComponent},
+    {path : 'ResetPassword', component: ResetPasswordComponent},
 
     {path : 'confirm', component: ConfirmEmailComponent},
 ];

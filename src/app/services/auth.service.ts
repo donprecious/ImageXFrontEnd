@@ -1,5 +1,5 @@
 import { IResponseModel } from './../shared/models/IResponseModel';
-import { IForgetModel } from './../auth/auth-model';
+import { IForgetModel, IForgetPasswordModel } from './../auth/auth-model';
 import { RegisterResponseModel, RegisterModel } from './../auth/register-model';
 import { SignInModel, SiginResponseModel, ISignIn } from './../auth/signin-model';
 import { ApiAppUrlService } from './api-app-url.service';
@@ -40,6 +40,7 @@ export class AuthService {
 
    public signIn(signInModel: SignInModel): Observable<SiginResponseModel> {
     return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/Login', signInModel);
+  
    }
 
    public register(registerModel: RegisterModel): Observable<RegisterResponseModel> {
@@ -47,25 +48,31 @@ export class AuthService {
    }
 
    public getCurrentUser() : Observable<IUser> {
-     return this.http.get<IUser>(this.api.baseApiUrl + 'Auth/GetCurrentUser');
+     return this.http.get<IUser>(this.api.baseApiUrl + 'Auth/current-user');
    }
 
    public GoogleSignIn(token): Observable<SiginResponseModel> {
-     return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/GoogleAuth', { 'idToken': token});
+     return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/Google', { 'idToken': token});
    }
    public FacebookSignIn(userId, token): Observable<SiginResponseModel> {
-    return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/FacebookAuth', { 'token': token, 'userId': userId});
+    return this.http.post<SiginResponseModel>(this.api.baseApiUrl+ 'Auth/Facebook', { 'token': token, 'userId': userId});
   }
   public SendForgetPassword( forget: IForgetModel): Observable<IResponseModel> {
-    return this.http.post<IResponseModel>(this.api.baseApiUrl + 'Auth/ForgotPassword/forgot', forget);
+    return this.http.post<IResponseModel>(this.api.baseApiUrl + 'Auth/Password/forgot', forget);
   }
+
+  public ForgetPassword(forgetPassword: IForgetPasswordModel): Observable<IResponseModel> {
+   return  this.http.patch<IResponseModel>(this.api.baseApiUrl + 'auth/Password/reset', forgetPassword);
+  }
+
   public SendConfirmationEmail(email: string): Observable<IResponseModel> {
-    return this.http.get<IResponseModel>(this.api.baseApiUrl +"Auth/ResendConfirmationEmail/resend-confirmation?email="+ email);
+    return this.http.get<IResponseModel>(this.api.baseApiUrl +"Auth/confirmation/resend/?email="+ email);
   }
 
   public ConfirmEmail(email: string, token: string): Observable<IResponseModel>{
-    return this.http.get<IResponseModel>(this.api.baseApiUrl+`Auth/ConfirmEmail/confirm?userId=${email}&token=${token}`);
+    return this.http.get<IResponseModel>(this.api.baseApiUrl+`Auth/confirm?userId=${email}&token=${token}`);
   }
+
 
 
   public SetAuthLocalStorage(a: SiginResponseModel){
