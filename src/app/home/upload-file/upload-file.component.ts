@@ -105,7 +105,7 @@ ngOnInit(): void {
         colors: [] as CreateColorModel[]
       };
       // show loader
-      this.ngxService.startLoader('loader-01');
+      this.ngxService.startLoader('loader-02');
       if (fileType=== "image"){
         loadImage(
           'https://cors-anywhere.herokuapp.com/' +  url,
@@ -141,12 +141,12 @@ ngOnInit(): void {
 
                 setTimeout(() => { this.initAutoCompete(id); } , 2000);
              
-                this.ngxService.stopLoader('loader-01');
+                this.ngxService.stopLoader('loader-02');
 
               }).
               catch(err=> {
                 console.log('vibrant error ', err);
-                this.ngxService.stopLoader('loader-01');
+                this.ngxService.stopLoader('loader-02');
 
               });
 
@@ -167,7 +167,7 @@ ngOnInit(): void {
 
           setTimeout(() => { this.initAutoCompete(obj.id); } , 5000);
           console.log("ready  files for submit", this.uploadedImage);
-          this.ngxService.stopLoader('loader-01');
+          this.ngxService.stopLoader('loader-02');
         }, 3000);
       }
     });
