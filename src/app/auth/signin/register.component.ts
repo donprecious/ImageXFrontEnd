@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MustMatch } from 'src/app/helpers/control-validators';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 declare var UIkit: any;
 declare var gapi: any;
 
@@ -24,7 +25,9 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private toast: ToastrService,
-              private router: Router
+              private router: Router,
+              private ngxService: NgxUiLoaderService
+              
      ) {
 
  }
@@ -35,7 +38,11 @@ export class RegisterComponent implements OnInit {
     this.errors = [] ;
     this.errorMessage = '';
     if( typeof gapi == 'undefined') {
-      location.reload();
+      let infoToast = this.toast ;
+      infoToast.toastOptions.positionClass = "toast-top-center"; 
+      infoToast.toastOptions.timeOut = '10000';
+      infoToast.info("poor internet connection, <a onclick='location.reload()'>click here to refresh page</a>");
+
     }else{
       this.loadgoogleLogin();
     }
@@ -69,45 +76,30 @@ export class RegisterComponent implements OnInit {
     } as RegisterModel;
 
     this.authService.register(data).subscribe(d => {
+      this.ngxService.startLoader('loader-01');
         console.log(d);
-        // login the user here
-        if(!d.data.canLogin){
-           // redirect user to confirm
-        }
+
         this.login({email: data.email, password: data.password }as SignInModel);
 
       }, err => {
-
+        this.ngxService.stopLoader('loader-01');
         console.log('error', err);
         this.hasError = true;
         this.errors = err.error.message.split(',');
-        // if (err.error != null || err.error != undefined) {
-        //     // tslint:disable-next-line: forin
-        //     if (typeof err.error !== 'string') {
-        //       for (let ikey in err.error) {
-        //         if (err.error.hasOwnProperty(ikey)) {
-        //           for (const i of err.error[ikey]) {
-        //             this.errors.push(i);
-        //             // console.log('key loop property", ...err.error[ikey] );
-        //           }
 
-        //         }
-
-        //       }
-        //     }
-
-        // }
 
       });
   }
 
   login(signInModel: SignInModel) {
+    this.ngxService.startLoader('loader-01');
 
     this.authService.signIn(signInModel).subscribe(a => {
       console.log(a);
       this.authService.SetAuthLocalStorage(a);
       this.toast.success('login successful', 'notification');
         // do other login stuff
+      this.ngxService.stopLoader('loader-01');
 
       UIkit.modal('#modal-auth').hide();
 
@@ -121,6 +113,8 @@ export class RegisterComponent implements OnInit {
      },
       err => {
       console.log('error', err);
+      this.ngxService.stopLoader('loader-01');
+
       this.errors = [];
       if (err.error.login_failure != null || err.error.login_failure !== undefined) {
        for (const i of  err.error.login_failure ) {
@@ -149,6 +143,7 @@ export class RegisterComponent implements OnInit {
      console.log(a);
      const currentUser = this.googleAuth.currentUser.get();
      const auth = currentUser.getAuthResponse();
+     this.ngxService.startLoader('loader-01');
      console.log('current user' , currentUser);
      const token = auth.id_token;
      this.authService.GoogleSignIn(token).subscribe( a => {
@@ -165,7 +160,8 @@ export class RegisterComponent implements OnInit {
        this.authService.isLogin.next(true);
        console.log('Is login observable', this.authService.isLogin);
        console.log(a);
-     });
+       this.ngxService.stopLoader('loader-01');
+     })
    });
  }
 

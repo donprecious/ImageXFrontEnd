@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 declare var UIkit: any;
 declare var gapi: any;
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
   loading: false;
   constructor(private authService: AuthService, private fb: FormBuilder,
               private toast: ToastrService, private store: Store<IAppState>,
-              private router: Router
+              private router: Router,
+              private ngxService: NgxUiLoaderService
     ) {
     }
 
@@ -38,7 +40,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if( typeof gapi == 'undefined') {
-      location.reload();
+      let infoToast = this.toast ;
+      infoToast.toastOptions.positionClass = "toast-top-center"; 
+      infoToast.toastOptions.timeOut = '10000';
+      infoToast.info("poor internet connection, <a onclick='location.reload()'>click here to refresh page</a>");
+
     }else{
       this.loadgoogleLogin();
     }
@@ -60,9 +66,11 @@ export class LoginComponent implements OnInit {
               email: this.loginForm.get('email').value,
               password: this.loginForm.get('password').value
           }as SignInModel;
+          this.ngxService.startLoader('loader-01');
 
           this.authService.signIn(data).subscribe(a => {
             console.log(a);
+            this.ngxService.stopLoader('loader-01');
 
             this.authService.SetAuthLocalStorage(a);
             this.toast.success('login successful', 'notification');
@@ -82,6 +90,7 @@ export class LoginComponent implements OnInit {
             if (err.error.login_failure != null || err.error.login_failure !== undefined) {
             for (const i of  err.error.login_failure ) {
               this.errors.push(i);
+              this.ngxService.stopLoader('loader-01');
             }
           }
           });
@@ -99,6 +108,7 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle() {
+     this.ngxService.startLoader('loader-01');
      this.googleAuth.signIn({
       scope: 'profile email',
       prompt: 'select_account'
@@ -117,7 +127,7 @@ export class LoginComponent implements OnInit {
 
         UIkit.modal('#modal-auth').hide();
 
-
+        this.ngxService.stopLoader('loader-01');
         this.authService.isLogin.next(true);
         console.log('Is login observable', this.authService.isLogin);
         location.reload();
@@ -126,6 +136,7 @@ export class LoginComponent implements OnInit {
   }
 
   siginWithFacebook(){
+    this.ngxService.startLoader('loader-01');
     FB.login((response) => {
       // handle the response
       if(response.status === "connected"){
@@ -135,17 +146,19 @@ export class LoginComponent implements OnInit {
           this.authService.SetAuthLocalStorage(a);
           this.authService.isLogin.next(true);
           this.toast.success('login successful');
+          this.ngxService.stopLoader('loader-01');
           location.reload();
+
 
         }, err => {
           console.log(err)
           this.toast.error(err.error.message);
-
+          this.ngxService.stopLoader('loader-01');
         });
       } else {
         // cant login
         this.toast.error('cant login', 'notification');
-
+        this.ngxService.stopLoader('loader-01');
       }
       console.log(response);
     },  {scope: 'email,public_profile'});

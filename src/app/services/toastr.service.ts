@@ -5,9 +5,7 @@ declare var toastr: any;
 })
 export class ToastrService {
 
-constructor() {
-
-  toastr.options = {
+ public toastOptions =  {
     "closeButton": false,
     "debug": false,
     "newestOnTop": false,
@@ -23,11 +21,15 @@ constructor() {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
-  }
+  };
+constructor() {
+
+  toastr.options = this.toastOptions;
 
  }
 
 success(message: string, title = '') {
+  
   toastr.success(message, title);
 }
 info(message: string, title = '') {

@@ -6,11 +6,15 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpInterceptor, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 declare var UIkit: any;
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-  constructor( private toast: ToastrService, private errorService: ErrorService ) {
+  constructor( private toast: ToastrService,
+               private errorService: ErrorService,
+               private ngxService: NgxUiLoaderService
+     ) {
 
   }
   message = "";
@@ -38,13 +42,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                       this.toast.info('You are not authorize to access this content');
                       break;
                   default:
-                    if(!navigator.onLine){
+                    if(!navigator.onLine) {
                       this.message = this.errorService.getServerErrorMessage(error);
                       this.toast.error("no internet connection");
                       break;
                     }
-
-
+                    this.ngxService.stopAll();
               }
           }
       } else {
