@@ -20,6 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+<<<<<<< HEAD
       
     - name: Cache node modules
       uses: actions/cache@v1
@@ -28,6 +29,8 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }} -node-
+=======
+>>>>>>> 3b0b4b58bf37c98ffcbc91733d26b91d3e147a8d
             
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1 
