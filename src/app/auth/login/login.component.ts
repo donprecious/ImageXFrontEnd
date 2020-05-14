@@ -78,6 +78,8 @@ export class LoginComponent implements OnInit {
 
             if(!a.data.canLogin){
               this.router.navigate(['/confirm-email']);
+            }else{
+              location.reload();
             }
             this.authService.isLogin.next(true);
             console.log('Is login observable', this.authService.isLogin);
