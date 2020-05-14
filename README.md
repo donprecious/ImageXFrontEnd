@@ -1,4 +1,10 @@
 # ImageAfrica
+build 
+[![buddy pipeline](https://app.buddy.works/donprecious/imagexfrontend/pipelines/pipeline/256427/badge.svg?token=79f555ecebd9c8973929cc5f58951e9f68ccd7aff15e97fa2bf32ce327203d59 "buddy pipeline")](https://app.buddy.works/donprecious/imagexfrontend/pipelines/pipeline/256427)
+
+https://app.buddy.works/donprecious/imagexfrontend/pipelines/pipeline/256427 
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
