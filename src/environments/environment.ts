@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  // baseApiUrl: 'https://imagexafrica.azurewebsites.net/api/'
-  baseApiUrl: `https://localhost:44304/api/`
+  baseApiUrl: 'http://api.imagexafrica.com/api/'
+  // baseApiUrl: `https://localhost:44304/api/`
 };
 
 
