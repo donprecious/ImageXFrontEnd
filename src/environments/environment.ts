@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  baseApiUrl: 'http://api.imagexafrica.com/api/'
+  baseApiUrl: 'https://api.imagexafrica.com/api/'
   // baseApiUrl: `https://localhost:44304/api/`
 };
 

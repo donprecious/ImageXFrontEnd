@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'image-africa';
 
   constructor(private auth: AuthService) {
-    console.log("version", "version 1.1 running");
+    console.log("version", "version 1.1.1 running");
   }
 
   ngOnInit(): void {
