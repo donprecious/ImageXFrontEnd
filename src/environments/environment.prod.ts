@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseApiUrl: 'https://api.imagexafrica.com/api/'
-  };
+  baseApiUrl: "https://imagex-app.herokuapp.com/api/",
+};

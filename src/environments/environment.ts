@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  // baseApiUrl: 'https://api.imagexafrica.com/api/'
-  baseApiUrl: `https://localhost:44304/api/`,
+  baseApiUrl: "https://imagex-app.herokuapp.com/api/",
+  // baseApiUrl: `https://localhost:44304/api/`,
 };
 
 /*
