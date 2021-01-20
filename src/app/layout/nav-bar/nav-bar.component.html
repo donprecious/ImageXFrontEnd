@@ -39,9 +39,9 @@
                   <a routerLink="/africa-map">Africa Map</a>
                 </li>
                 <li><a routerLink="/world-map">World Map</a></li>
-                <li><a href="#">Loved by many</a></li>
+                <!-- <li><a href="#">Loved by many</a></li>
                 <li><a href="#">Photos by colors</a></li>
-                <li><a href="#">By Region</a></li>
+                <li><a href="#">By Region</a></li> -->
               </ul>
             </div>
           </li>
@@ -92,10 +92,11 @@
               <a href="#">Categories</a>
 
               <ul class="uk-nav-sub">
-                <li><a href="#">Festivals</a></li>
-                <li><a href="#">Love</a></li>
-                <li><a href="#">People</a></li>
-                <li><a href="#">More</a></li>
+                <li *ngFor="let category of categories">
+                  <a [routerLink]="['/search', { categoryId: category.id }]">{{
+                    category.name
+                  }}</a>
+                </li>
               </ul>
             </li>
             <li class="uk-parent">
@@ -106,9 +107,9 @@
                   <a routerLink="africa-map">Africa Map</a>
                 </li>
                 <li><a routerLink="world-map">World Map</a></li>
-                <li><a href="#">Loved by many</a></li>
+                <!-- <li><a href="#">Loved by many</a></li>
                 <li><a href="#">Photos by colors</a></li>
-                <li><a href="#">By Region</a></li>
+                <li><a href="#">By Region</a></li> -->
               </ul>
             </li>
             <li>
