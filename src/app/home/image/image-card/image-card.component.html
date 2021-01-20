@@ -1,68 +1,123 @@
-<div class="uk-inline uk-transition-toggle" tabindex="0">
+<div class="uk-inline">
   <a [routerLink]="['/view', image.id]">
-    <img data-src="{{image.imageUrl}}" *ngIf="image.fileType=='image'||image.fileType==null" width=""  class="uk-border-rounded" height="" alt="" uk-img>
-    <video  src="{{image.imageUrl}}" loop muted playsinline uk-video="autoplay: inview; automute: true"  *ngIf="image.fileType == 'video'" class="uk-float-left uk-border-rounded"></video>
+    <img
+      data-src="{{ image.imageUrl }}"
+      *ngIf="image.fileType == 'image' || image.fileType == null"
+      width=""
+      class="uk-border-rounded"
+      height=""
+      alt=""
+      uk-img
+    />
+    <video
+      src="{{ image.imageUrl }}"
+      loop
+      muted
+      playsinline
+      uk-video="autoplay: inview; automute: true"
+      *ngIf="image.fileType == 'video'"
+      class="uk-float-left uk-border-rounded"
+    ></video>
   </a>
 
-  <div class="uk-overlay uk-overlay-primary   uk-position-bottom uk-transition-fade" style="padding:15px">
+  <div
+    class="uk-overlay uk-overlay-primary uk-position-bottom"
+    style="padding: 15px"
+  >
     <div class="uk-clearfix">
-      <a class="uk-float-left"  >
-
-        <img src="{{profileUrl}}"  width="40" class="uk-border-circle" ></a>
-          <div uk-drop="pos: top-center">
-              <div class="uk-card uk-card-body uk-card-default uk-padding-small">
-
-                 <div class="uk-clearfix">
-                  <img src="{{profileUrl}}"  class="uk-float-left" width="40">
-                  <span class="uk-float-right text-style-1" > {{image.user.firstName == null? 'anonymous': image.user.firstName}} {{image.user.lastName}}
-                    <br>
-                    <span style="font-size: 0.8rem;"> <i class="fa fa-eye" ></i> views   {{contributorViews}}</span> <br>
-                    <span style="font-size: 0.8rem;"> <i class="fa fa-network-wired" ></i> fellowers 10.5k</span> <br>
-                  </span>
-
-                </div>
-
-                <button mat-raised-button color="primary" class="uk-margin"> Follow</button>
-              </div>
+      <a class="uk-float-left">
+        <img src="{{ profileUrl }}" width="40" class="uk-border-circle"
+      /></a>
+      <div uk-drop="pos: top-center">
+        <div class="uk-card uk-card-body uk-card-default uk-padding-small">
+          <div class="uk-clearfix">
+            <img src="{{ profileUrl }}" class="uk-float-left" width="40" />
+            <span class="uk-float-right text-style-1">
+              {{
+                image.user.firstName == null
+                  ? "anonymous"
+                  : image.user.firstName
+              }}
+              {{ image.user.lastName }}
+              <br />
+              <span style="font-size: 0.8rem">
+                <i class="fa fa-eye"></i> views {{ contributorViews }}</span
+              >
+              <br />
+              <span style="font-size: 0.8rem">
+                <i class="fa fa-network-wired"></i> fellowers 0</span
+              >
+              <br />
+            </span>
           </div>
-         <p class="uk-overflow-hidden uk-float-right">{{image.name.length >20 ? image.name.substring(0, 20)+" ...": image.name}}</p>
 
-
+          <button mat-raised-button color="primary" class="uk-margin">
+            Follow
+          </button>
+        </div>
       </div>
+      <p class="uk-overflow-hidden uk-float-right">
+        {{
+          image.name.length > 20
+            ? image.name.substring(0, 20) + " ..."
+            : image.name
+        }}
+      </p>
+    </div>
 
     <div class="uk-clearfix">
       <div class="uk-float-left uk-inline">
-     <span style="font-size: 0.8rem;"> <i class="fa fa-eye" ></i>  {{viewsfig}}</span>
-       <!-- start-->
-       <div class="uk-inline" *ngIf="image.geoLat !== 0 && image.geoLog !== 0" >
-        <a class="uk-margin-left" (mouseover)="viewMap(image.id, image.geoLat, image.geoLog)" (click)="viewMap(image.id, image.geoLat, image.geoLog)"  title='view location' >
-
-          <i  width="40" class="fa fa-map-marker" ></i></a>
-            <div uk-drop="pos: top-center">
-                <div class="uk-card uk-card-body uk-card-default uk-padding-small">
-
-                   <div class="uk-clearfix">
-                     <div id="map_{{image.id}}" class='map' style="height: 400px;"></div>
-                  </div>
-
-
-
-                </div>
+        <span style="font-size: 0.8rem">
+          <i class="fa fa-eye"></i> {{ viewsfig }}</span
+        >
+        <!-- start-->
+        <div class="uk-inline" *ngIf="image.geoLat !== 0 && image.geoLog !== 0">
+          <a
+            class="uk-margin-left"
+            (mouseover)="viewMap(image.id, image.geoLat, image.geoLog)"
+            (click)="viewMap(image.id, image.geoLat, image.geoLog)"
+            title="view location"
+          >
+            <i width="40" class="fa fa-map-marker"></i
+          ></a>
+          <div uk-drop="pos: top-center">
+            <div class="uk-card uk-card-body uk-card-default uk-padding-small">
+              <div class="uk-clearfix">
+                <div
+                  id="map_{{ image.id }}"
+                  class="map"
+                  style="height: 400px"
+                ></div>
+              </div>
             </div>
-         <!-- end-->
-       </div>
-
+          </div>
+          <!-- end-->
+        </div>
       </div>
       <div class="uk-float-right">
+        <a
+          #addElement
+          (click)="addCollection(addElement, image.id)"
+          title="add to collection"
+          class="uk-margin-medium-right"
+          ><i class="fa fa-plus"></i>
+        </a>
+        <a
+          #likeElement
+          (click)="addLike(likeElement, image.id)"
+          title="like photo {{ image.name }}"
+          class="uk-margin-medium-right"
+        >
+          <i class="fa fa-heart"></i>
+        </a>
 
-        <a #addElement (click)='addCollection(addElement, image.id)' title='add to collection' class="uk-margin-medium-right"><i class=" fa fa-plus"></i> </a>
-        <a #likeElement (click)='addLike(likeElement, image.id)' title='like photo {{image.name}}' class="uk-margin-medium-right"> <i class="fa fa-heart"></i> </a>
-
-        <a href="{{image.imageUrl}}" download title='download photo {{image.name}}'  class="fa fa-download"></a>
-
+        <a
+          href="{{ image.imageUrl }}"
+          download
+          title="download photo {{ image.name }}"
+          class="fa fa-download"
+        ></a>
       </div>
-  </div>
+    </div>
   </div>
 </div>
-
-

@@ -19,6 +19,7 @@ import { WorldMapComponent } from './world-map/world-map.component';
 import { ViewImageComponent } from './image/view-image/view-image.component';
 import { MyCollectionComponent } from './image/my-collection/my-collection.component';
 import { UsersImageCardComponent } from './image/users-image-card/users-image-card.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { UsersImageCardComponent } from './image/users-image-card/users-image-ca
        WorldMapComponent,
        ViewImageComponent,
        MyCollectionComponent,
-       UsersImageCardComponent
+       UsersImageCardComponent,
+       SearchComponent
       ],
   imports: [
     CommonModule,

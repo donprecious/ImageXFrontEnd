@@ -5,10 +5,9 @@
 export const environment = {
   production: false,
 
-  baseApiUrl: 'https://api.imagexafrica.com/api/'
-  // baseApiUrl: `https://localhost:44304/api/`
+  // baseApiUrl: 'https://api.imagexafrica.com/api/'
+  baseApiUrl: `https://localhost:44304/api/`,
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file
