@@ -1,4 +1,4 @@
-<div class="uk-inline">
+<div class="uk-inline uk-transition-toggle" tabindex="0">
   <a [routerLink]="['/view', image.id]">
     <img
       data-src="{{ image.imageUrl }}"
@@ -21,7 +21,7 @@
   </a>
 
   <div
-    class="uk-overlay uk-overlay-primary uk-position-bottom"
+    class="uk-overlay uk-overlay-primary uk-position-bottom uk-transition-fade"
     style="padding: 15px"
   >
     <div class="uk-clearfix">
