@@ -3,6 +3,7 @@
     "node_modules{,/**}",
     ".vscode{,/**}"
   ],
+  
   "appService.deploySubpath": "dist\\image-africa\\assets\\helpers",
   "appService.defaultWebAppToDeploy": "/subscriptions/97d40d5a-23e5-4721-b80a-e95c2e8b6ff5/resourceGroups/imagexResourceGroup/providers/Microsoft.Web/sites/imagexapp"
 }
